@@ -2,30 +2,7 @@
 
 This document provides instructions for setting up and running the "nina" application, as well as some lessons learned during its development.
 
-## Instructions
 
-### Firebase Project Setup
-
-1.  Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-2.  In the Google Cloud Console for your project, enable the **Vertex AI API**.
-3.  In the Firebase Console, go to the **Authentication** section and enable the **Google** sign-in provider.
-4.  In the Google Cloud Console, go to **APIs & Services > Credentials**.
-5.  Click **+ CREATE CREDENTIALS** and select **OAuth client ID**.
-6.  For **Application type**, select **Web application**.
-7.  Under **Authorized JavaScript origins**, add the following URIs:
-    *   `https://<your-project-id>.firebaseapp.com`
-    *   `https://<your-project-id>.web.app`
-    *   `http://localhost:8080` (and any other ports you use for local development)
-8.  Under **Authorized redirect URIs**, add the following URI:
-    *   `https://<your-project-id>.firebaseapp.com/__/auth/handler`
-9.  Copy the **Web client ID**.
-
-### Application Setup
-
-1.  In `lib/login_screen.dart`, replace `YOUR_WEB_CLIENT_ID` with your Web client ID.
-2.  In `web/index.html`, make sure the `meta` tag for `google-signin-client_id` has your client ID.
-3.  Run `flutter pub get` to install the dependencies.
-4.  Run `flutter run -d chrome` to run the application in debug mode.
 
 ## Lessons Learned
 
@@ -39,6 +16,7 @@ This document provides instructions for setting up and running the "nina" applic
 *   **`firebase_ai` package:** The `firebase_ai` package is still in development and the API is subject to change. When working with image generation, the `ImagenImage` class has a `bytesBase64Encoded` getter which returns a `String`, not a `Uint8List`. You need to use `base64Decode` to convert it to a `Uint8List` before displaying it.
 *   **Code Organization:** As UI complexity grows, it's crucial to refactor large widget build methods into smaller, dedicated widget files (e.g., in a `lib/widgets/` directory). This improves maintainability and makes debugging and modification significantly easier.
 *   **StaggeredGridTile API:** When using packages like `flutter_staggered_grid_view`, ensure you understand the correct constructor usage. `StaggeredGridTile.count` requires named parameters (`crossAxisCellCount`, `mainAxisCellCount`). For dynamic layouts, it's better to have helper functions return simple data objects (like a custom class holding dimensions) rather than returning configured widget instances.
+*   **Client-Side Authorization Checks:** Attempting to check an allowlist in Firestore immediately after login from the client can fail due to permission errors. The user's authentication state (`request.auth`) may not be immediately available to Firestore's security rules in that context. The robust, secure solution is to delegate the authorization check to a trusted backend (like a Cloud Function or dedicated service) that can verify the user's token and query the allowlist with server-side privileges.
 
 
 ## Running and building
@@ -54,12 +32,3 @@ You can also ask the user to provide Chrome developer console snippets.
 
 
 
-# Milestones and Updates
-
-At various milestone achievements, offer to update our lessons learned and consolidate our successes here, updating this document.
-
-## Architectural Philosophy
-
-*   **Start Simple, Then Refactor:** It's better to build a simple, working version of a feature first and then refactor it as complexity grows. We started with a basic `GridView`, evolved to a `StaggeredGrid`, and then broke the UI into separate, maintainable widgets (`ImageGrid`, `SettingsPanel`). This iterative approach is more effective than trying to build the perfect, complex architecture from the start.
-*   **The App is the Source of Truth:** When debugging backend interactions (like CORS or database writes), the client application's configuration is the ultimate source of truth. The issue with images not appearing in GCS was solved by reading `firebase_options.dart` to see which `storageBucket` the app was *actually* using, rather than assuming.
-*   **Elevate with AI:** Use generative AI not just as a tool, but as a creative partner. The feature to have Gemini generate prompt ideas transformed the app from a simple utility into a more engaging and helpful creative assistant.
