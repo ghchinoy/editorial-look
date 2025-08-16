@@ -1,0 +1,235 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#fcf8f8] group/design-root overflow-x-hidden"
+      style='--select-button-svg: url(&apos;data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(156,73,73)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e&apos;); font-family: "Space Grotesk", "Noto Sans", sans-serif;'
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4e7e7] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#1c0d0d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6_330)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"
+                    fill="currentColor"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_6_330"><rect width="48" height="48" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
+            </div>
+            <h2 class="text-[#1c0d0d] text-lg font-bold leading-tight tracking-[-0.015em]">Editorial Look</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSv4BVzu2G0hdo-0YnsMhQsQy5rbwjlqVJAiNygJDXd8FcgIabHesvQoUcKPVzkQIDBvZZbS_QnLWGBsTWc3OrwJn9s-Nnu87wU4-g2FCRgZKsLQci1cZxz5AYw6K-dXv7HBz6oh7j1t6dUiL2_TB_TqVxazb-CWRmEOmOhqsFgl9dOOUgfleBFXMz4GhKX3lHR4jeFdy7W7uQYb8cpsInGXM6_JFJruLRqEbRua76PsSGo44TwOfENJMQOAN3_Ai2p8NFjdOSMWI");'
+            ></div>
+          </div>
+        </header>
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[920px] flex-1">
+            <div class="px-4 py-3">
+              <label class="flex flex-col min-w-40 h-12 w-full">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                  <div
+                    class="text-[#9c4949] flex border-none bg-[#f4e7e7] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                    data-icon="MagnifyingGlass"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <input
+                    placeholder="Enter your prompt"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c0d0d] focus:outline-0 focus:ring-0 border-none bg-[#f4e7e7] focus:border-none h-full placeholder:text-[#9c4949] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    value=""
+                  />
+                </div>
+              </label>
+            </div>
+            <div class="flex gap-3 p-3 flex-wrap pr-4">
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#f4e7e7] pl-4 pr-4">
+                <p class="text-[#1c0d0d] text-sm font-medium leading-normal">business magazine</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#f4e7e7] pl-4 pr-4">
+                <p class="text-[#1c0d0d] text-sm font-medium leading-normal">fashion hero</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#f4e7e7] pl-4 pr-4">
+                <p class="text-[#1c0d0d] text-sm font-medium leading-normal">old film cinematic</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <div
+                class="relative flex items-center justify-center bg-[#f20d0d] bg-cover bg-center aspect-video rounded-lg p-4"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDw5truDN0Xkk5dEEZ0M3T28kzLTV5odgyjANN2lIca0OYLoRabvs1kPR4tOx8dSOy4z8X6XuPOqGtosqWbhac6wsEV0ETYVyRBJBmQhyy6oZpgogfX7YgJfUV9qTaEsNSVgH-79XL43cjpmBKjq_QBKgxr-3eFlI5XqhsryeppffrwOjVT9-nUypT4CInZY7n2F55yOjV7dUPwInVaLBh-9pYn6gLeIkHOgBG-ShZsks2MDelbwUXwziNizBvKvof_Mr1uhmaHP2s");'
+              >
+                <button class="flex shrink-0 items-center justify-center rounded-full size-16 bg-black/40 text-white">
+                  <div class="text-inherit" data-icon="Play" data-size="24px" data-weight="fill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 max-w-[480px] justify-center">
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f20d0d] text-[#fcf8f8] text-sm font-bold leading-normal tracking-[0.015em] grow"
+                >
+                  <span class="truncate">Save to Cloud Storage</span>
+                </button>
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4e7e7] text-[#1c0d0d] text-sm font-bold leading-normal tracking-[0.015em] grow"
+                >
+                  <span class="truncate">View Gallery</span>
+                </button>
+              </div>
+            </div>
+            <h2 class="text-[#1c0d0d] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Saved Images</h2>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBnhNGWr5J2KE8EPfFWu6JxLYLu_tGDzvQbWm7cHRLy9U-0p84IKkAHdGGgBpddzbYGoqr_YA-cpWiAbAMj78hr-2enNKnlxZtCg4lyBl5WjfcfscwFiM2tV47QcUx7YfCzpOmgoSId8SPBvj-NPvD-fwwRxMSkoP9SmpD5FODRVrZbVkGCQg1WL2rpGdzrIw5Jp6eZpsdPzgfllxKnzPI_QVEW7zOMq572bSjIQamAIle82hpr3yW59qKf5073TI2iD4ZDhRB6Tpo");'
+                ></div>
+                <p class="text-[#1c0d0d] text-base font-medium leading-normal">Business Magazine</p>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCH339AC30Ubpb3gAefYDd9I6XJsyh3SLdK_W5gvMbKr_CJhBNPE6rQuSMDnIICr_b0t3zhaYkmSlDpnJwkvgRncqDbvb3tTzanHlagmlrtmFbw3WF0_zI-cs1dCGJKPJGQn-DtbqQpl1ctEPRLJePvbbjTrba3PZboCuf27J5iNTx1qeQB1lBQndw1Sw64BPB4-mLvatx1cWkvkFn6AsodyoGHugiQZIWZC1Uxf6N37D4T74S-Ihm_OEwb9w8VbO91re6llZA1i4w");'
+                ></div>
+                <p class="text-[#1c0d0d] text-base font-medium leading-normal">Fashion Hero</p>
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFlZBgToX_un-B80wHo-9vaeL5IGqfR45JNcOJvfi38TEpc02vosaKrtwJNus9o5B-1PSz-W5HGJqN4kzow3a8Pbhjc5t0ptDwpdrJdXcXLCEjL-EBF5o27bXXNiM3ncgiPGqzV6Rl4DYs6LG5xNRd9baHUH6rMIE1hZKlBzpXTgJQulaWTcGBNRkBVsZMP5k_PVHwzXGcZoUbrO7FjH16Xa6KcAzfNbEth4-51AzNX5EqyyZL6efxnahXKx2Tx6rAXb1aAmFh2gA");'
+                ></div>
+                <p class="text-[#1c0d0d] text-base font-medium leading-normal">Old Film Cinematic</p>
+              </div>
+            </div>
+          </div>
+          <div class="layout-content-container flex flex-col w-[360px]">
+            <h2 class="text-[#1c0d0d] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Settings</h2>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <select
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c0d0d] focus:outline-0 focus:ring-0 border border-[#e8cece] bg-[#fcf8f8] focus:border-[#e8cece] h-14 bg-[image:--select-button-svg] placeholder:text-[#9c4949] p-[15px] text-base font-normal leading-normal"
+                >
+                  <option value="one"></option>
+                  <option value="two">two</option>
+                  <option value="three">three</option>
+                </select>
+              </label>
+            </div>
+            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+              <label class="flex flex-col min-w-40 flex-1">
+                <select
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c0d0d] focus:outline-0 focus:ring-0 border border-[#e8cece] bg-[#fcf8f8] focus:border-[#e8cece] h-14 bg-[image:--select-button-svg] placeholder:text-[#9c4949] p-[15px] text-base font-normal leading-normal"
+                >
+                  <option value="one"></option>
+                  <option value="two">two</option>
+                  <option value="three">three</option>
+                </select>
+              </label>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-[#1c0d0d] text-base font-medium leading-normal">Image Resolution</p>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal @[480px]:hidden">1024x1024</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#e8cece]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#f20d0d]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#f20d0d]"></div></div>
+                  </div>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal hidden @[480px]:block">1024x1024</p>
+                </div>
+              </div>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-[#1c0d0d] text-base font-medium leading-normal">Style Variation</p>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal @[480px]:hidden">Medium</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#e8cece]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#f20d0d]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#f20d0d]"></div></div>
+                  </div>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal hidden @[480px]:block">Medium</p>
+                </div>
+              </div>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-[#1c0d0d] text-base font-medium leading-normal">Gemini Influence</p>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal @[480px]:hidden">50%</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#e8cece]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#f20d0d]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#f20d0d]"></div></div>
+                  </div>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal hidden @[480px]:block">50%</p>
+                </div>
+              </div>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-[#1c0d0d] text-base font-medium leading-normal">Imagen 4 Influence</p>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal @[480px]:hidden">50%</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#e8cece]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#f20d0d]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#f20d0d]"></div></div>
+                  </div>
+                  <p class="text-[#1c0d0d] text-sm font-normal leading-normal hidden @[480px]:block">50%</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex px-4 py-3 justify-end">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4e7e7] text-[#1c0d0d] text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Reset to Default</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

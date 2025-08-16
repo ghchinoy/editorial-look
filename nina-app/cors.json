@@ -1,0 +1,8 @@
+[
+  {
+    "origin": ["http://0.0.0.0:8000", "http://localhost:8000", "https://editorial-look.web.app", "https://veo-genmedia-studio.web.app"],
+    "method": ["GET", "POST", "PUT"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]
