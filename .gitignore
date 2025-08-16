@@ -1,0 +1,30 @@
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# IDE/Editor specific
+.idea/
+.vscode/
+*.iml
+
+# Sensitive Files
+# This file is generated locally by `flutterfire configure` and contains project-specific API keys.
+# Anyone cloning the repository should generate their own.
+nina-app/lib/firebase_options.dart
+
+# Firebase RC file - contains project-specific aliases and targets.
+# Anyone cloning the repository should configure their own.
+nina-app/.firebaserc
+
+# Logs
+*.log
+app_logs.txt
+
+# OS-specific
+.DS_Store
+
+.commit.txt
+drivectl-mcp.log
+.gemini

@@ -1,0 +1,234 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f8] group/design-root overflow-x-hidden" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4e7e7] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#1c0d0d]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6_330)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"
+                    fill="currentColor"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_6_330"><rect width="48" height="48" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
+            </div>
+            <h2 class="text-[#1c0d0d] text-lg font-bold leading-tight tracking-[-0.015em]">Editorial Look</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-[#1c0d0d] text-sm font-medium leading-normal" href="#">Home</a>
+              <a class="text-[#1c0d0d] text-sm font-medium leading-normal" href="#">Create</a>
+              <a class="text-[#1c0d0d] text-sm font-medium leading-normal" href="#">Gallery</a>
+            </div>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4e7e7] text-[#1c0d0d] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-[#1c0d0d]" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFzxY3f7n1IKR4-6scM6-rUYogtj8oJdu-azKjcxqapxpaOfcoW30HGIoojxCnRx2tR7ICPONfpP8g1AkCFRwyA_e0pIddctcHmDRDye2Em2HY5iru3GJDipu1wF5SKSfQ25Gtv-gm9MMdTs18sQCzrVCwbVO6E_MXrIP5qGXzcs-iv3T_Byf7K9X7bLYchl2WS-ZT_xjA8uA5b0LI8_bHh58V1MHBrPHFdWVMcgzOLbnTipVtz9Bs837Td6W3Er5ITB0vziFOaBg");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="px-4 py-3">
+              <label class="flex flex-col min-w-40 h-12 w-full">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                  <div
+                    class="text-[#9c4949] flex border-none bg-[#f4e7e7] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                    data-icon="MagnifyingGlass"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <input
+                    placeholder="Search your images"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c0d0d] focus:outline-0 focus:ring-0 border-none bg-[#f4e7e7] focus:border-none h-full placeholder:text-[#9c4949] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    value=""
+                  />
+                </div>
+              </label>
+            </div>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCakRkdunwV9Zvu5lzQVcPaAvnp8Ivocbkz-Ve4u0uTpte4GUf-tCQghRxPOudb4yoSbWaRj-JZ52kzycBbLhelXfHURSXnbU9bnNmrPTM00TyzOdR89nukf_PvclOuIwUBbHHTQjCsajJjo-77GmSOrQZk-BTuNQRmV9CfJ5cq1jxnmEpGyY8FaOp4aDIYiI6pN1R1PJk2cpZ1zKCOBsH5q03S3tS5293rKF_9vYGCC5p7HE1DL9lzdw_t0dV6Kbdv6_eVCEZxu1s");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzVqaGxH3CszsYtO3pn3xuRn-hLFU901ijYMuHeJz2tRYvKDJFs5F9PU3sfZN_TQ19Slg51gDrU2ywxf4Bah2pewSbIHpb_J9yfsp4r1blzrvtOhNleAxzebhGhtAVCX3dsVsfEBArKHLrvI0mzwHe-ifdNwFmvj9b5sjJe5SM0zXCUzF86C2xbfKCLXA2-qMilzID8N1oiZEzXzSFpuETvksJdGE0EXzbcMrwBu3p4n0NlWZUbtUE07p3eNsNV9a0ulW7EvU6XOU");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1ntybH8KcPXMt1XX9pKx-ebUCm9gDwDGjQ6DBjzN3kVlRKc9Ffne4VDQxYD5WSnn6pjcFUnbsdxELyHtBsin97w5cZjsZFyGNX-jeUABjO0Davz2NM5V4J1lNWpfTSfU-htMqJAfkAkFHId_QEPm24HNG0ubqdRwj8TGflzFGMkbsnO8OqJnR1WJdPig7u0sHpFzK3WOwZCY2uk0gweTTEXIQwXOzBqzO1Ba545Evi6hCHooVFt9VSelEUXKeLd6AzmAk9_edijY");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGZ_Zl21k738FORJo-wcKuXRG8i6N0jlBmz6pgMg4VjOa3uT3xmGjyCE3SwfVQzBAG4ZH2JgDyUPq9KuMXWAv83_QZfmAaFRkws-1usY-54gIWDL20w92YCwL4MlQ-iT5ekmL8O0wxlTr_qxx9vl2hr1xQCvPzZIdvu9yd3_YpU2kTcEw_CV0NFyTIElqfjUF-K96muGNmCWK5N1GtVFcOrgj6ToGsChNx7ykIOe6YfKR6YDyEp-1K_Ut--9Ft2Zk9uR2TkMcwuCg");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAlO3bSYmFYtFw8-8SCb3e0jWYMWJANgDa80X5pKbtf-Lrnv0x8eei1eh1VF4LCTS_yNtYY52Euv-bLTR9CJh0hwoBZCvyJGsDceyhQpPDh-gIEJ42-m7EPnr1yRVy2fnruDJAT2DPAhdcSbQo0pwL24POGwqc3J9N_-8NLXaPS8rOvqmwf87rJNgC2jXRMNDR0x0-nAPXeP5BBImKg5QJxm7ehfrRIWb5TIaSaB0NTilm--MaTPhgj8TEjHmgG9xJZT59m0VkTBxo");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClFuECEOJxrVWPEgp_b_xpKxwQC2HNeGH4FRx5SsvOsM64zI8aIrHYR2uNphKyR6kgJZxjm7p129WAlbCNfuMK5O5AZEo2GH3fDIvwCs9bWYfvSm-l6PoOtSMUoqX9nshpNQFbNBCF457DFGU_imYkjzG3uazThPQyYTcCT96JFAhaDKHJW-gDaY4hIQ1kSsY_REaZoldvTqpC0IV2JRYt0L5x2zPFsFi9lcQvPPDWYosSjgmR6z5N3xUjsLFsQfuN17aE3qq5Qyg");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZrifkNTzdjQcrUsCxBSTd8VN5kMKM7Ap8rWSyVykruS38SoEHtkgcsA3WQW3PXG79nZvsky1RNJFV1kXCb--lUfzxcufUf9yHdjP9fmL4S-XvolqqfhqO8VxImjdOpSF910SEvZgBZzsvSTv52685-mRW9ej3HTE7exjvKpFo0T9GMIIR_0FznjB18jZmqKgk4-tIjltIQsi4HYAVpfjSf5qsTxUgharr4eDEVarruS3kdgD-vRjvmwWi0ky0tJwfs2PYrbMRNCk");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPvP6xFAJ6PnKGpIKjQBTldAPVusN-2SnicNTlHp9zywzKc7trBwbtmuLC_Ii1Ghs7dxdKfVG6HK46o3Cx7d2EM_jwrJoOMeCR_lvHwJnoxEGaPCFlSZj_Th2VnYuiIDInHwtgwQpEage1xRi5KF0JhwtLB6uLnT_OqnPAzy0IREH2zATbH08y17OqMNEP4PNoYPH-_pb0rqMHcEaX83dSIfm9f70W1h-Fnq8wk2aGCYnCRpUAeXHif9ubmSufL6TzWynTKuuzapk");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZBBwPT09ZzAcbuPzKDe6R4y-oJBoQTMFyjYwj-iwVLJt12wE62GH99wExf9m5jWKInptCRKappCuG1KoJ2ek5Gc632amxnV4nfL4tdpFO57ilu1pYKyk0OSfj3nniSQ-hLf4RygHcdfcOdxmo4XT9as7F76u117ZgUymHjbPA1CN1NZ683kE3rQSgz8gEAOZ1lqxP71ir5vMr93H3hmAztTLAf-Nu22mb08esHCY_PMgNEU2yGx8xJ4sB9NzHKoDv_4Uc-14mGTY");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFP66FLH5QKrYMXFoYgP-4oMYTVGz6ZcbMO5wOAbIV1ledlHRKFujbUBjbMI8RGLaKFLkc2g8HeQ_KcjinBoywAbMSvFQ3INDEdY36jDbSWkPVpcH5-OTv1_yJxqjddFFRtNIp2MEjHlAJf44VQ6UhrJhvWhnbxx4cba9rjHQdTeJVyEfMOdFvzy4ncGrz3lqudU6p2TX4X0DRzO_uOLXtT3-L-WrR9LZ_2zUyKhSizpVBxs4gDz4a4Phvby1QOPb1xxU-aYhuw0s");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCy02TXeHXefc2tOowCvWRu4Y9AaPPTKKAEkBTFgl_Yh8dzJLc8yqUdls5u_cWwukh9aaTQG0foqHNHh5EmjKNKcYv7Ah4r0gNDOCKnF37SLMjxewgnNvX7f-Ejpg4FtPP5Pa_V_YKZKMEoHe6tzryWshE5GEXEZdCjQzV-l3cQerqGvmBJFv57sNFbzwiBWGZWo6WmCeKL_nagUfIi8A9VJ-qxOXmLs8Sk9D9SkvHBpaQlcogv6jwYP8-BEyT_oQ7dQcmiAjD5do8");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDc5AuL96_FSYu8xQlHhuCH6D4WQKh31ZEG-1ikglWiJEY0f-IzmV_CscTTq_7V_-RX7JGwabqQhQOAM_c-JHn1t1ceuVcd85nlOTpVI3d3883kQUyxwtgqBTATRWc7rC6We35-WBadJ1a6HVvySERUVBYFcM6hzm4bQrEJglpqu4w0jTPFF5-xGoMUVRAQ7z2czdebHsHzFtX7rSWAgpXmjjyjWbPLsY0kbrER5RTi8ZoDwUPkO-1F1Re91ZxIl9dMd3TRNcwrVqM");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDRP1Lsg7A81Ue5Ld67gsyVTS0Ja1zB4fSCdzn8gfF4mC5vK5c_JN5I1-vsbE4tcIOLPzs0HbkerdUJKt8VJYNZdKAPhf3mxSwQw5-4eqYRFADERHZzY5Kybo5nomzaYXDmoeI5xF14y_yI2y66r_QqSCaI7KRDVpaf5qN5QDG96NNPngcCxJFefpelWEi8SRgKwWfzAnCnyu4F250UK_-7v_puaSPuC1D62mzGFvt2gKWUdo38QGCncgjwZHlwarYQvKk21n8NY4");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBzRg63a4xUk4bACeoUq9eKOsygpky91iaOTKnY8SYd09l0UNcXCwr-sfmEaKHU9_mR3LHaz-EoA9zf83JHGuz4L54-BA_zMMw2Dv_SmDGoLHvfKSJOCqFRMxQjIMjnlT5A8TKMLYA_jVdYbPfw4uyqFIFbxCqIbA_T_TZjs2sMc9NBJ4lwXW2tu-kMHTm9LnkiGbZ6i2wAfX30yjZr9_XPGtseKEl4Gipr6q9wNV8BnVsjaPX7SJNkBwVzebklP_cgoAmwifSyWrg");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAN6Gnx-7D5T_sg1aUmscyrjJWxBg4EFYodV2OLg1YPjwbBQBN11XfJSSbt5atDPmFdJgiOEznwDTZ6HLOOpx1-Uyn4YxYlDkmbxigdmPypPXm2kxAQrGRjcg7EI1PPScUjczbqxWCTPavCLira_SU67BRCXo6cI7UPL-A98vPu_Z5eDkSYYsAAw-Fw8SVnP5qFzjpXhAgmR6h382gnDnI8GQW5JvpTlBKgJ9J7UpKGJCUB4RfbrQAtQYwKBcKNOvJn6aBK7LM_DoA");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCaBfhvOaVWZD58M9yvE1HhMXpvNcFg4GbbSSa_EeF0BBJbp60AwzoyyWOnx6gWwR8ajfG1maARwLjfOchjBJdAof0TYwt9JlHXoMMUbCV19QAkDFg3epdF7BhXRSvwf7EZLbZRWQrAQNOWw9hsMO4EEEr2hucpoxiYN1bIYXBWKjuDnZNyUQttZ9Ia4jyyvdQsKbT2oVJrD6BmsGCDcX_8zHNizbsrjcAxIyRzrx7a7db6LFqaOvhMRfPW12caZWgcs07CNQ8ignM");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACwbwfXJk3_bpgKlPIJCglGw61EwemILK2DZEVRSPzxU9FI_1118SmKe1CzOrn5gqC3MdVr2VhiIY4WTIV4MaPSUb44JaOzMWHoAs96-DTb-QB4GQFPGtDue-LUWBAqZ8SRCik3s6EdCpZViyVg9X_R9FX90RjLQL9KkeEs9yFUENXYVrjMt4z7u61BwKdA3OU3G5WZrwiMy8NjkNeQzm-xlJkPGTNb0h1GcqbrNqdKii2Gm8_h01uRHPS7m4VDCd3RaqzlKD4wa8");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpvNW7etbi3PLUlaSK8Hr7L8XYc8bouSpEdOWvagMTxj69SHT2syOswv3KDxgWI6A6mQ46jVCCbH04AeMy-_gMnrBzsQcX0QG19tasjEeee_gDiLD6kTHczUY8ZMZjfpnA1wTg6QvH0aHW8zIPXFLOOq7R98aLI1DzTwkJJNEH0diG0DMAJ-3-qfQaPW_mo0Wl-deS0pOtc0zrhC5XsiaCmXEFzpum-A0WFWIGKzYNBBAUl8HhlygBOKDqmlUfb6r-VrdJKvUqHds");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBU6AgvtGpJdC6J8EUdsF4KszYU6NM6RsiCTiDVrIMPX9z5gHEryZgt9pu1jP9bb8Nn5Ns-lv680IEqhnvRgEjWiFuyIRETq7FOadIYfPsBN1sOWoJzCL5grm_0yor4l2tD0LSWcEJCuTiz-kPvYgzsgU5Xw5zJQRXY3je7vBcsVO6gEGccaF_wXy06Z-Z6QvNT1Sdt76_h6J57-2jSnxPm05mi62XCBq3s4dmZSiD6NzsvvaSCVbI3PzQD_3n97-UIadCpxDUw8Wk");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4IHCp_VDSuwh5yNCVR1GVKn84UxW04gEX8F5ImJt9KqVN5wxqI0u7okTJuGtSeqYkNw02fe7lVltHxBojVyuTpZ3L8TVZxPFN2x3IdsHzGb03cETjDqBv56e0YaziPVBIRI_yw3glF23bXrXrb3Te4qns8JiMBHQox3MKlIW_ic8wJppfqtq1uQG7PEvaxolqt5K00VanVFhZp5IA-GMtGNB5PxsIC8SHouq62Iyt1FcoQ8sr-TZusbWrarY5Of6IizKBaDaan_s");'
+                ></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-center p-4">
+              <a href="#" class="flex size-10 items-center justify-center">
+                <div class="text-[#1c0d0d]" data-icon="CaretLeft" data-size="18px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
+                  </svg>
+                </div>
+              </a>
+              <a class="text-sm font-bold leading-normal tracking-[0.015em] flex size-10 items-center justify-center text-[#1c0d0d] rounded-full bg-[#f4e7e7]" href="#">1</a>
+              <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#1c0d0d] rounded-full" href="#">2</a>
+              <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#1c0d0d] rounded-full" href="#">3</a>
+              <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#1c0d0d] rounded-full" href="#">4</a>
+              <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#1c0d0d] rounded-full" href="#">5</a>
+              <a href="#" class="flex size-10 items-center justify-center">
+                <div class="text-[#1c0d0d]" data-icon="CaretRight" data-size="18px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users can read and write to the lookbook if they are authenticated.
+    // A future feature will be a public gallery, so reads are open for now.
+    match /lookbook/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // No one can read or write to the allowlist from the client. This is handled by the backend service.
+    match /lookbook_allowlist/{document} {
+      allow read, write: if false;
+    }
+  }
+}
