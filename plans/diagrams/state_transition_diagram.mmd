@@ -1,0 +1,14 @@
+stateDiagram
+    [*] --> NotLoggedIn
+    NotLoggedIn --> LoggingIn: Google Sign-In
+    LoggingIn --> CheckingAuth: Auth Success
+    CheckingAuth --> NotAuthorized: Allowlist Check Fails
+    CheckingAuth --> LoggedIn: Allowlist Check Succeeds
+    NotAuthorized --> NotLoggedIn: Dismiss
+    LoggedIn --> GeneratingImage: User Submits Prompt
+    GeneratingImage --> DisplayingImage: Image Generation Succeeds
+    GeneratingImage --> LoggedIn: Image Generation Fails
+    DisplayingImage --> GeneratingCritique: Image Displayed
+    GeneratingCritique --> DisplayingCritique: Critique Generation Succeeds
+    GeneratingCritique --> DisplayingImage: Critique Generation Fails
+    DisplayingCritique --> LoggedIn: User dismisses critique

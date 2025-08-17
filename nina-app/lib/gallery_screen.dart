@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:nina/login_screen.dart';
+import 'package:nina/widgets/stacked_image_preview.dart';
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key});
@@ -169,18 +170,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         children: [
                           AspectRatio(
                             aspectRatio: 1,
-                            child: Image.network(
-                              doc['imageUrls'][0],
-                              fit: BoxFit.cover,
+                            child: StackedImagePreview(
+                              key: Key(doc.id),
+                              imageUrls: List<String>.from(doc['imageUrls']),
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            doc['prompt'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          
                         ],
                       );
                     },

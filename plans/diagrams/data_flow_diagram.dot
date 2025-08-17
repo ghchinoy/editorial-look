@@ -1,0 +1,39 @@
+digraph DataFlowDiagram {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    subgraph cluster_LoginScreen {
+        label="LoginScreen";
+        GoogleSignIn [label="Google Sign-In"];
+        UserObject [label="User Object"];
+        GoogleSignIn -> UserObject;
+    }
+
+    subgraph cluster_HomeScreen {
+        label="HomeScreen";
+        HomeScreenState [label="Home Screen State"];
+        SettingsPanel [label="Settings Panel"];
+        ImageGrid [label="Image Grid"];
+        CritiquePanel [label="Critique Panel"];
+        HomeScreenState -> SettingsPanel;
+        HomeScreenState -> ImageGrid;
+        HomeScreenState -> CritiquePanel;
+        SettingsPanel -> HomeScreenState [label="Style & City Selections"];
+        ImageGrid -> HomeScreenState [label="Image Selection"];
+    }
+
+    subgraph cluster_Firestore {
+        label="Firestore";
+        LookbookCollection [label="lookbook Collection"];
+    }
+
+    subgraph cluster_VertexAI {
+        label="Vertex AI";
+        VertexAIModels [label="Gemini & Imagen Models"];
+    }
+
+    HomeScreenState -> VertexAIModels [label="Prompts & Images"];
+    VertexAIModels -> HomeScreenState [label="Generated Images & Critiques"];
+    HomeScreenState -> LookbookCollection [label="Image Metadata"];
+    LookbookCollection -> ImageGrid [label="Image Data"];
+}

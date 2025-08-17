@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant User
+    participant FlutterApp as Flutter App
+    participant FirebaseAuth as Firebase Auth
+    participant NinaService as nina-service
+    participant Firestore
+    participant VertexAI as Vertex AI
+    participant FirebaseStorage as Firebase Storage
+
+    User->>FlutterApp: Launches App
+    FlutterApp->>FirebaseAuth: Check for existing user
+    FirebaseAuth-->>FlutterApp: User exists
+    FlutterApp->>NinaService: /checkAuth
+    NinaService->>Firestore: Query lookbook_allowlist
+    Firestore-->>NinaService: User is authorized
+    NinaService-->>FlutterApp: Returns isAuthorized: true
+    FlutterApp-->>User: Displays Home Screen
+
+    User->>FlutterApp: Enters Prompt
+    FlutterApp->>VertexAI: Generate Image
+    VertexAI-->>FlutterApp: Returns Image
+    FlutterApp->>FirebaseStorage: Upload Image
+    FirebaseStorage-->>FlutterApp: Returns Image URL
+    FlutterApp->>Firestore: Save Image Metadata
+    Firestore-->>FlutterApp: Metadata saved
+    FlutterApp->>VertexAI: Generate Critique
+    VertexAI-->>FlutterApp: Returns Critique
+    FlutterApp-->>User: Displays Image and Critique

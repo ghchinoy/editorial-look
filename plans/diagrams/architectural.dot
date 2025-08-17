@@ -1,0 +1,31 @@
+digraph ArchitecturalDiagram {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    subgraph cluster_user {
+        label="User";
+        User;
+    }
+
+    subgraph cluster_frontend {
+        label="Frontend";
+        WebApp [label="Flutter Web App\n(nina-app)"];
+    }
+
+    subgraph cluster_backend {
+        label="Backend Services";
+        FirebaseAuth [label="Firebase Auth"];
+        NinaService [label="nina-service\n(Go)"];
+        Firestore;
+        FirebaseStorage [label="Firebase Storage"];
+        VertexAI [label="Vertex AI\n(Gemini & Imagen)"];
+    }
+
+    User -> WebApp;
+    WebApp -> FirebaseAuth;
+    WebApp -> NinaService;
+    WebApp -> Firestore;
+    WebApp -> FirebaseStorage;
+    WebApp -> VertexAI;
+    NinaService -> Firestore;
+}
