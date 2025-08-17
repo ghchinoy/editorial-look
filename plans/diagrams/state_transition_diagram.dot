@@ -1,0 +1,17 @@
+digraph StateTransitionDiagram {
+    rankdir=TB;
+    node [shape=box];
+
+    "NotLoggedIn" -> "LoggingIn" [label="Google Sign-In"];
+    "LoggingIn" -> "CheckingAuth" [label="Auth Success"];
+    "CheckingAuth" -> "NotAuthorized" [label="Allowlist Check Fails"];
+    "CheckingAuth" -> "LoggedIn" [label="Allowlist Check Succeeds"];
+    "NotAuthorized" -> "NotLoggedIn" [label="Dismiss"];
+    "LoggedIn" -> "GeneratingImage" [label="User Submits Prompt"];
+    "GeneratingImage" -> "DisplayingImage" [label="Image Generation Succeeds"];
+    "GeneratingImage" -> "LoggedIn" [label="Image Generation Fails"];
+    "DisplayingImage" -> "GeneratingCritique" [label="Image Displayed"];
+    "GeneratingCritique" -> "DisplayingCritique" [label="Critique Generation Succeeds"];
+    "GeneratingCritique" -> "DisplayingImage" [label="Critique Generation Fails"];
+    "DisplayingCritique" -> "LoggedIn" [label="User dismisses critique"];
+}

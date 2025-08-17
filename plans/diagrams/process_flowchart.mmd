@@ -1,0 +1,20 @@
+graph TD
+    A[Start] --> B{User Logged In?};
+    B -- No --> C[Show Login Screen];
+    C --> D[User Logs In with Google];
+    D --> E{Check Allowlist};
+    E -- "Not Authorized" --> F["Show Not Authorized Message"];
+    E -- Authorized --> G[Show Home Screen];
+    B -- Yes --> G;
+
+    G --> H{User enters prompt?};
+    H -- No --> I[Wait for user input];
+    H -- Yes --> J[Generate Image];
+    J --> K{Image Generation Successful?};
+    K -- No --> L[Show Error Message];
+    K -- Yes --> M[Display Image];
+    M --> N[Generate Critique];
+    N --> O{Critique Generation Successful?};
+    O -- No --> P[Show Error Message];
+    O -- Yes --> Q[Display Critique];
+    Q --> I;

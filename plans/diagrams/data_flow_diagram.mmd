@@ -1,0 +1,26 @@
+graph TD
+    subgraph LoginScreen
+        A[Google Sign-In] --> B{User Object};
+    end
+
+    subgraph HomeScreen
+        B --> C[Home Screen State];
+        C --> D[Settings Panel];
+        C --> E[Image Grid];
+        C --> F[Critique Panel];
+        D -- Style & City Selections --> C;
+        E -- Image Selection --> C;
+    end
+
+    subgraph Firestore
+        G[lookbook Collection];
+    end
+
+    subgraph VertexAI
+        H[Gemini & Imagen Models];
+    end
+
+    C -- Prompts & Images --> H;
+    H -- Generated Images & Critiques --> C;
+    C -- Image Metadata --> G;
+    G -- Image Data --> E;

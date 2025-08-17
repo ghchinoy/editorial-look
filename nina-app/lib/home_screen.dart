@@ -16,6 +16,7 @@ import 'package:nina/login_screen.dart';
 import 'package:nina/widgets/image_grid.dart';
 import 'package:nina/widgets/settings_panel.dart';
 import 'package:nina/widgets/critique_panel.dart';
+import 'package:nina/widgets/stacked_image_preview.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback toggleTheme;
@@ -541,9 +542,9 @@ class HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.circular(
                                           8.0,
                                         ),
-                                        child: Image.network(
-                                          doc['imageUrls'][0],
-                                          fit: BoxFit.contain,
+                                        child: StackedImagePreview(
+                                          key: Key(doc.id),
+                                          imageUrls: List<String>.from(doc['imageUrls']),
                                         ),
                                       ),
                                     ),

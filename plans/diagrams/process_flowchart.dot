@@ -1,0 +1,24 @@
+digraph ProcessFlowchart {
+    rankdir=TB;
+    node [shape=box];
+
+    Start -> "LoggedIn" [label="User Logged In?"];
+    "LoggedIn" -> "LoginScreen" [label="No"];
+    "LoginScreen" -> "LogsIn";
+    "LogsIn" -> "CheckAllowlist" [label="Check Allowlist"];
+    "CheckAllowlist" -> "NotAuthorized" [label="Not Authorized"];
+    "CheckAllowlist" -> "HomeScreen" [label="Authorized"];
+    "LoggedIn" -> "HomeScreen" [label="Yes"];
+
+    "HomeScreen" -> "UserEntersPrompt" [label="User enters prompt?"];
+    "UserEntersPrompt" -> "WaitForUserInput" [label="No"];
+    "UserEntersPrompt" -> "GenerateImage" [label="Yes"];
+    "GenerateImage" -> "ImageGenerationSuccessful" [label="Image Generation Successful?"];
+    "ImageGenerationSuccessful" -> "ShowErrorMessage" [label="No"];
+    "ImageGenerationSuccessful" -> "DisplayImage" [label="Yes"];
+    "DisplayImage" -> "GenerateCritique";
+    "GenerateCritique" -> "CritiqueGenerationSuccessful" [label="Critique Generation Successful?"];
+    "CritiqueGenerationSuccessful" -> "ShowErrorMessage2" [label="No"];
+    "CritiqueGenerationSuccessful" -> "DisplayCritique" [label="Yes"];
+    "DisplayCritique" -> "WaitForUserInput";
+}

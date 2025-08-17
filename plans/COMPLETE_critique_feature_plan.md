@@ -35,8 +35,8 @@ This plan outlines the implementation of a new feature that provides an AI-power
 
 ### Part 3: Final Verification
 
-- [ ] **Task 3.1: Run `flutter build web`** to ensure the project compiles without errors.
-- [ ] **Task 3.2: Test the full feature flow.**
-  - [ ] Confirm the UI splits correctly.
-  - [ ] Generate an image and confirm the `_generateCritique` method is called.
-  - [ ] Verify the critique appears in the `CritiquePanel`.
+- [x] **Task 3.1: Run `flutter build web`** to ensure the project compiles without errors.
+- [x] **Task 3.2: Test the full feature flow.**
+  - [x] Confirm the UI splits correctly.
+  - [x] Generate an image and confirm the `_generateCritique` method is called.
+  - [x] Verify the critique appears in the `CritiquePanel`.
