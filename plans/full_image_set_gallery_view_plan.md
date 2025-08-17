@@ -29,5 +29,6 @@ This plan outlines the implementation of a new screen to display a full-page gri
 ### Part 5: Navigation
 
 *   **Task 5.1: Enable navigation from the gallery.**
-    *   [ ] In `gallery_screen.dart`, wrap the `StackedImagePreview` widget in a `GestureDetector`.
-    *   [ ] When a user taps on the `StackedImagePreview`, navigate to the new `ImageSetScreen`, passing the corresponding document snapshot.
+    *   [x] In `gallery_screen.dart`, the `StackedImagePreview` widget is wrapped in a `GestureDetector`.
+    *   [x] When a user taps on the `StackedImagePreview`, it navigates to the `FullScreenImageView`.
+    *   [ ] This should be updated to navigate to the new `ImageSetScreen`, passing the corresponding document snapshot.

@@ -5,21 +5,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:nina/login_screen.dart';
 import 'package:nina/widgets/stacked_image_preview.dart';
+import 'package:nina/widgets/full_screen_image_view.dart';
 
+/// A screen that displays a gallery of the user's generated images.
 class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({super.key});
+  /// A callback to toggle the theme of the application.
+  final VoidCallback toggleTheme;
+
+  /// Creates a new [GalleryScreen] instance.
+  const GalleryScreen({super.key, required this.toggleTheme});
 
   @override
   _GalleryScreenState createState() => _GalleryScreenState();
 }
 
+/// The state for the [GalleryScreen].
 class _GalleryScreenState extends State<GalleryScreen> {
+  /// The currently logged in user.
   final User? _user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFCF8F8),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -43,13 +51,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ''',
               width: 24,
               height: 24,
-              color: const Color(0xFF1C0D0D),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Editorial Look',
               style: TextStyle(
-                color: Color(0xFF1C0D0D),
+                color: Theme.of(context).colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -62,7 +70,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               child: Text(
                 'Create',
                 style: TextStyle(
-                  color: Color(0xFF1C0D0D),
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -74,7 +82,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               child: Text(
                 'Gallery',
                 style: TextStyle(
-                  color: Color(0xFF1C0D0D),
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -83,6 +91,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
           ],
         ),
         actions: [
+          IconButton(
+            onPressed: widget.toggleTheme,
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
           if (_user?.photoURL != null)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
@@ -109,8 +126,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   onBackgroundImageError: (exception, stackTrace) {
                     print('Error loading image: $exception');
                   },
-                  child: (_user?.photoURL == null || _user!.photoURL!.isEmpty)
-                      ? Text(_user!.displayName![0])
+                  child: (_user.photoURL == null || _user.photoURL!.isEmpty)
+                      ? Text(_user.displayName![0])
                       : null,
                 ),
               ),
@@ -125,13 +142,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search your images',
-                hintStyle: TextStyle(color: Colors.black54),
-                prefixIcon: Icon(Icons.search, color: Colors.black54),
+                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+                prefixIcon: Icon(Icons.search, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   borderSide: BorderSide.none,
                 ),
-                fillColor: Color(0xFFF4E7E7),
+                fillColor: Theme.of(context).colorScheme.surface,
                 filled: true,
               ),
             ),
@@ -170,9 +187,21 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         children: [
                           AspectRatio(
                             aspectRatio: 1,
-                            child: StackedImagePreview(
-                              key: Key(doc.id),
-                              imageUrls: List<String>.from(doc['imageUrls']),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => FullScreenImageView(
+                                      imageUrls: List<String>.from(doc['imageUrls']),
+                                      initialIndex: 0,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: StackedImagePreview(
+                                key: Key(doc.id),
+                                imageUrls: List<String>.from(doc['imageUrls']),
+                              ),
                             ),
                           ),
                           
