@@ -4,8 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 
-enum ImageLayout { quiltedContain, quiltedCover, standardGrid }
+/// An enum that represents the different layouts for the image grid.
+enum ImageLayout {
+  /// A quilted layout where the images are contained within their tiles.
+  quiltedContain,
 
+  /// A quilted layout where the images cover their tiles.
+  quiltedCover,
+
+  /// A standard grid layout.
+  standardGrid
+}
 
 // Private data class to hold tile dimensions
 class _TileData {
@@ -14,14 +23,24 @@ class _TileData {
   final int mainAxisCellCount;
 }
 
+/// A widget that displays a grid of images.
 class ImageGrid extends StatelessWidget {
+  /// Whether the images are currently being loaded.
   final bool isLoading;
+
+  /// The layout of the grid.
   final ImageLayout layout;
-  
+
+  /// The list of generated images.
   final List<Uint8List> generatedImages;
+
+  /// The number of images to display.
   final double numberOfImages;
+
+  /// The aspect ratio of the images.
   final String selectedAspectRatio;
 
+  /// Creates a new [ImageGrid] instance.
   const ImageGrid({
     super.key,
     required this.isLoading,

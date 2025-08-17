@@ -7,16 +7,24 @@ import 'dart:convert';
 import 'package:nina/home_screen.dart';
 import 'package:nina/config.dart';
 
+/// A screen that provides a login interface for the user.
 class LoginScreen extends StatefulWidget {
+  /// A callback to toggle the theme of the application.
   final VoidCallback toggleTheme;
+
+  /// Creates a new [LoginScreen] instance.
   const LoginScreen({super.key, required this.toggleTheme});
 
   @override
   LoginScreenState createState() => LoginScreenState();
 }
 
+/// The state for the [LoginScreen].
 class LoginScreenState extends State<LoginScreen> {
+  /// The Firebase Authentication instance.
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  /// The Google Sign-In instance.
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId: '64774088793-td1p6p05f27mjn0elqpo0kifol3kk6hn.apps.googleusercontent.com',
     scopes: ['email'],
@@ -25,6 +33,7 @@ class LoginScreenState extends State<LoginScreen> {
   // TODO: Refactor to use renderButton instead of signIn.
   // The signIn method is deprecated on the web and will be removed in a future version.
   // See: https://pub.dev/packages/google_sign_in_web#migrating-to-v011-and-v012-google-identity-services
+  /// Signs the user in with Google and returns the user's credentials.
   Future<UserCredential> _signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -36,6 +45,7 @@ class LoginScreenState extends State<LoginScreen> {
     return await _auth.signInWithCredential(credential);
   }
 
+  /// Checks if the user is authorized to access the application.
   Future<bool> _isUserAuthorized(User user) async {
     final idToken = await user.getIdToken();
     final url = Uri.parse(authServiceUrl);
@@ -60,7 +70,7 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFCF8F8),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -84,13 +94,13 @@ class LoginScreenState extends State<LoginScreen> {
               ''',
               width: 24,
               height: 24,
-              color: const Color(0xFF141414),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Editorial Look',
               style: TextStyle(
-                color: Color(0xFF141414),
+                color: Theme.of(context).colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -118,11 +128,11 @@ class LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
+                Text(
                   'AI-Powered Runway Looks',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF141414),
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
@@ -134,7 +144,8 @@ class LoginScreenState extends State<LoginScreen> {
                       final userCredential = await _signInWithGoogle();
                       if (!mounted) return;
 
-                      final isAuthorized = await _isUserAuthorized(userCredential.user!);
+                      final isAuthorized =
+                          await _isUserAuthorized(userCredential.user!);
 
                       if (isAuthorized) {
                         Navigator.of(context).pushReplacement(
@@ -148,7 +159,8 @@ class LoginScreenState extends State<LoginScreen> {
                         await _auth.signOut();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Access Denied: This account is not authorized.'),
+                            content: Text(
+                                'Access Denied: This account is not authorized.'),
                           ),
                         );
                       }
@@ -162,7 +174,7 @@ class LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF141414),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -171,10 +183,10 @@ class LoginScreenState extends State<LoginScreen> {
                       vertical: 12,
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Continue with Google',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

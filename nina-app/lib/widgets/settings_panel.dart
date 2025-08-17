@@ -1,20 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// A widget that displays the settings panel.
 class SettingsPanel extends StatefulWidget {
+  /// The currently selected Imagen model.
   final String selectedModel;
+
+  /// The currently selected aspect ratio for image generation.
   final String selectedAspectRatio;
+
+  /// The number of images to generate.
   final double numberOfImages;
+
+  /// The currently selected editorial style.
   final String selectedStyle;
+
+  /// The currently selected city for the editorial style.
   final String? selectedCity;
+
+  /// Whether the creative prompts are currently being generated.
   final bool isGeneratingPrompts;
+
+  /// A callback to handle changes to the selected model.
   final ValueChanged<String?> onModelChanged;
+
+  /// A callback to handle changes to the selected aspect ratio.
   final ValueChanged<String?> onAspectRatioChanged;
+
+  /// A callback to handle changes to the number of images.
   final ValueChanged<double> onNumberOfImagesChanged;
+
+  /// A callback to handle changes to the selected style.
   final ValueChanged<String> onStyleChanged;
+
+  /// A callback to handle changes to the selected city.
   final ValueChanged<String?> onCityChanged;
+
+  /// A callback to generate creative prompts.
   final VoidCallback onGeneratePrompts;
 
+  /// Creates a new [SettingsPanel] instance.
   const SettingsPanel({
     super.key,
     required this.selectedModel,
@@ -35,10 +60,19 @@ class SettingsPanel extends StatefulWidget {
   State<SettingsPanel> createState() => _SettingsPanelState();
 }
 
-class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProviderStateMixin {
+/// The state for the [SettingsPanel].
+class _SettingsPanelState extends State<SettingsPanel>
+    with SingleTickerProviderStateMixin {
+  /// The controller for the tabs.
   late TabController _tabController;
+
+  /// The value of the style slider.
   late double _styleValue;
+
+  /// The currently selected city.
   String? _selectedCity;
+
+  /// The labels for the style slider.
   final List<String> _styleLabels = ['Business', 'Fashion', 'High Fashion'];
 
   @override
@@ -58,18 +92,18 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFF4E7E7),
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Settings',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -79,9 +113,9 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                 Tab(text: 'Generation'),
                 Tab(text: 'Editorial'),
               ],
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.black54,
-              indicatorColor: Colors.black,
+              labelColor: Theme.of(context).colorScheme.onSurface,
+              unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              indicatorColor: Theme.of(context).colorScheme.primary,
             ),
             Expanded(
               child: TabBarView(
@@ -93,21 +127,25 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                     child: Column(
                       children: [
                         DropdownButtonFormField<String>(
-                          value: widget.selectedModel,
-                          style: const TextStyle(color: Colors.black),
-                          dropdownColor: Colors.white,
+                          initialValue: widget.selectedModel,
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'Model',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFFCF8F8),
+                            fillColor: Theme.of(context).colorScheme.surface,
                           ),
                           items: const [
                             DropdownMenuItem(
@@ -123,28 +161,32 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                         ),
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
-                          value: widget.selectedAspectRatio,
-                          style: const TextStyle(color: Colors.black),
-                          dropdownColor: Colors.white,
+                          initialValue: widget.selectedAspectRatio,
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'Aspect Ratio',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFFCF8F8),
+                            fillColor: Theme.of(context).colorScheme.surface,
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: '1:1',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_square, color: Colors.black),
+                                  Icon(Icons.crop_square, color: Theme.of(context).colorScheme.onSurface),
                                   SizedBox(width: 8),
                                   Text('1:1 (1024x1024)'),
                                 ],
@@ -154,7 +196,10 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                               value: '3:4',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_portrait, color: Colors.black),
+                                  Icon(
+                                    Icons.crop_portrait,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
                                   SizedBox(width: 8),
                                   Text('3:4 (896x1280)'),
                                 ],
@@ -164,7 +209,10 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                               value: '4:3',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_landscape, color: Colors.black),
+                                  Icon(
+                                    Icons.crop_landscape,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
                                   SizedBox(width: 8),
                                   Text('4:3 (1280x896)'),
                                 ],
@@ -174,7 +222,10 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                               value: '9:16',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_portrait, color: Colors.black),
+                                  Icon(
+                                    Icons.crop_portrait,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
                                   SizedBox(width: 8),
                                   Text('9:16 (768x1408)'),
                                 ],
@@ -184,7 +235,10 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                               value: '16:9',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_landscape, color: Colors.black),
+                                  Icon(
+                                    Icons.crop_landscape,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
                                   SizedBox(width: 8),
                                   Text('16:9 (1408x768)'),
                                 ],
@@ -197,9 +251,9 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Number of Images',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                             ),
                             Slider(
                               value: widget.numberOfImages,
@@ -208,8 +262,8 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                               divisions: 3,
                               label: widget.numberOfImages.round().toString(),
                               onChanged: widget.onNumberOfImagesChanged,
-                              activeColor: const Color(0xFFF20D0D),
-                              inactiveColor: const Color(0xFFE8CECE),
+                              activeColor: Theme.of(context).colorScheme.primary,
+                              inactiveColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                             ),
                           ],
                         ),
@@ -224,9 +278,9 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Style',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                             ),
                             Slider(
                               value: _styleValue,
@@ -238,39 +292,62 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                                 setState(() {
                                   _styleValue = value;
                                 });
-                                widget.onStyleChanged(_styleLabels[_styleValue.round()]);
+                                widget.onStyleChanged(
+                                  _styleLabels[_styleValue.round()],
+                                );
                               },
-                              activeColor: const Color(0xFFF20D0D),
-                              inactiveColor: const Color(0xFFE8CECE),
+                              activeColor: Theme.of(context).colorScheme.primary,
+                              inactiveColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
-                          value: _selectedCity,
-                          style: const TextStyle(color: Colors.black),
-                          dropdownColor: Colors.white,
+                          initialValue: _selectedCity,
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'City',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(color: Color(0xFFE8CECE)),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              ),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFFCF8F8),
+                            fillColor: Theme.of(context).colorScheme.surface,
                           ),
-                          items: const [
-                            'London', 'Milan', 'New York', 'LA', 'Miami', 'Paris', 'Santorini', 'Tokyo', 'Cape Town', 'Bali', 'Venice', 'Iceland', 'Dubai', 'Marrakech', 'Rio de Janeiro', 'Rome'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                          items:
+                              const [
+                                'London',
+                                'Milan',
+                                'New York',
+                                'Chicago',
+                                'LA',
+                                'Miami',
+                                'Paris',
+                                'Santorini',
+                                'Tokyo',
+                                'Cape Town',
+                                'Bali',
+                                'Venice',
+                                'Iceland',
+                                'Dubai',
+                                'Marrakech',
+                                'Rio de Janeiro',
+                                'Rome',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
                               _selectedCity = newValue;
@@ -279,22 +356,7 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
                           },
                         ),
                         const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: _selectedCity == null || widget.isGeneratingPrompts
-                              ? null
-                              : widget.onGeneratePrompts,
-                          child: widget.isGeneratingPrompts
-                              ? Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  child: const Text('Generating...'),
-                                )
-                              : const Text('Generate Prompts'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF20D0D),
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
+                        _buildGenerateButton(),
                       ],
                     ),
                   ),
@@ -305,5 +367,31 @@ class _SettingsPanelState extends State<SettingsPanel> with SingleTickerProvider
         ),
       ),
     );
+  }
+
+  Widget _buildGenerateButton() {
+    if (widget.isGeneratingPrompts) {
+      return Shimmer.fromColors(
+        baseColor: Colors.red[300]!,
+        highlightColor: Colors.red[100]!,
+        child: ElevatedButton(
+          onPressed: null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          ),
+          child: const Text('Generating...'),
+        ),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: _selectedCity == null ? null : widget.onGeneratePrompts,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        ),
+        child: const Text('Generate Prompts'),
+      );
+    }
   }
 }

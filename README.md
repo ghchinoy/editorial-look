@@ -18,6 +18,8 @@ Nina is an experimental web application designed to be a creative partner for ge
 
 ![Nina App Screenshot](https://github.com/user-attachments/assets/9478d7f7-28c8-4f57-b15c-dfef4bbf17f9)
 
+![Nina App Screenshot](https://github.com/user-attachments/assets/a7aff66e-4b6d-4fb5-8740-4690f4f52016)
+
 ---
 
 ### 📂 Project Structure

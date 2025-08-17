@@ -19,6 +19,7 @@ This plan outlines the implementation of a structured editor critique feature.
           "closing": "..."
         }
         ```
+    *   [ ] To ensure the model returns valid JSON, set the `responseMimeType` in the `generationConfig` to `application/json`. See: [https://firebase.google.com/docs/ai-logic/generate-structured-output?api=vertex#generate-json-basic](https://firebase.google.com/docs/ai-logic/generate-structured-output?api=vertex#generate-json-basic)
 
 ### Part 2: Update the `_generateCritique` Method
 

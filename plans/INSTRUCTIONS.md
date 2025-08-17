@@ -131,7 +131,7 @@ firebase deploy --only hosting:editorial-look
 
 ```
 const firebaseConfig = {
-    apiKey: "***REMOVED***",
+    apiKey: "AIzaSyA4xqGT1ZFMGTB0zbIgnBDYFN_YfiEKBIc",
     authDomain: "ghchinoy-genai-sa.firebaseapp.com",
     projectId: "ghchinoy-genai-sa",
     storageBucket: "ghchinoy-genai-sa.appspot.com",

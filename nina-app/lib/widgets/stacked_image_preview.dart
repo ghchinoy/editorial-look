@@ -1,18 +1,22 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// A widget that displays a stack of images with a playful animation.
 class StackedImagePreview extends StatefulWidget {
+  /// The list of image URLs to display.
   final List<String> imageUrls;
 
-  const StackedImagePreview({Key? key, required this.imageUrls}) : super(key: key);
+  /// Creates a new [StackedImagePreview] instance.
+  const StackedImagePreview({super.key, required this.imageUrls});
 
   @override
   _StackedImagePreviewState createState() => _StackedImagePreviewState();
 }
 
+/// The state for the [StackedImagePreview].
 class _StackedImagePreviewState extends State<StackedImagePreview>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  /// The controller for the animation.
   late AnimationController _controller;
 
   @override
@@ -38,6 +42,7 @@ class _StackedImagePreviewState extends State<StackedImagePreview>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: [
         ...widget.imageUrls.asMap().entries.map((entry) {
@@ -77,7 +82,7 @@ class _StackedImagePreviewState extends State<StackedImagePreview>
               );
             },
           );
-        }).toList(),
+        }),
         if (widget.imageUrls.length > 1)
           Positioned(
             top: 4,
