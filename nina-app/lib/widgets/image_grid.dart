@@ -40,6 +40,12 @@ class ImageGrid extends StatelessWidget {
   /// The aspect ratio of the images.
   final String selectedAspectRatio;
 
+  /// The structured critique data.
+  final Map<String, dynamic>? structuredCritique;
+
+  /// Whether to show the aesthetic scores on the images.
+  final bool showAestheticScores;
+
   /// Creates a new [ImageGrid] instance.
   const ImageGrid({
     super.key,
@@ -48,6 +54,8 @@ class ImageGrid extends StatelessWidget {
     required this.generatedImages,
     required this.numberOfImages,
     required this.selectedAspectRatio,
+    this.structuredCritique,
+    this.showAestheticScores = false,
   });
 
   // Helper method to get quilted layout patterns
@@ -152,15 +160,13 @@ class ImageGrid extends StatelessWidget {
           children: [
             for (int i = 0; i < generatedImages.length; i++)
               StaggeredGridTile.count(
-                crossAxisCellCount: _getQuiltedGridTiles(generatedImages.length)[i].crossAxisCellCount,
-                mainAxisCellCount: _getQuiltedGridTiles(generatedImages.length)[i].mainAxisCellCount,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.memory(
-                    generatedImages[i],
-                    fit: layout == ImageLayout.quiltedCover ? BoxFit.cover : BoxFit.contain,
-                  ),
-                ),
+                crossAxisCellCount:
+                    _getQuiltedGridTiles(generatedImages.length)[i]
+                        .crossAxisCellCount,
+                mainAxisCellCount:
+                    _getQuiltedGridTiles(generatedImages.length)[i]
+                        .mainAxisCellCount,
+                child: _buildImageTile(i),
               ),
           ],
         );
@@ -174,15 +180,44 @@ class ImageGrid extends StatelessWidget {
           ),
           itemCount: generatedImages.length,
           itemBuilder: (context, index) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.memory(
-                generatedImages[index],
-                fit: BoxFit.contain,
-              ),
-            );
+            return _buildImageTile(index);
           },
         );
     }
+  }
+
+  Widget _buildImageTile(int index) {
+    final imageCritiques =
+        structuredCritique?['image_critiques'] as List<dynamic>?;
+    final aestheticScore = (showAestheticScores &&
+            imageCritiques != null &&
+            index < imageCritiques.length)
+        ? imageCritiques[index]['aesthetic_score'] as String?
+        : null;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.memory(
+            generatedImages[index],
+            fit: layout == ImageLayout.quiltedCover
+                ? BoxFit.cover
+                : BoxFit.contain,
+          ),
+          if (aestheticScore != null)
+            Positioned(
+              bottom: 8,
+              right: 8,
+              child: Chip(
+                label: Text(aestheticScore),
+                backgroundColor: Colors.black.withOpacity(0.5),
+                labelStyle: const TextStyle(color: Colors.white),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
