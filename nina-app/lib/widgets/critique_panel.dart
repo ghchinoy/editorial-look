@@ -46,14 +46,11 @@ class CritiquePanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Expanded(
-            child: _buildCritiqueContent(context),
-          ),
+          Expanded(child: _buildCritiqueContent(context)),
         ],
       ),
     );
   }
-
 
   Widget _buildCritiqueContent(BuildContext context) {
     if (structuredCritique == null) {
@@ -61,24 +58,21 @@ class CritiquePanel extends StatelessWidget {
     }
 
     final intro = structuredCritique!['intro'] as String?;
-    final imageCritiques = 
+    final imageCritiques =
         structuredCritique!['image_critiques'] as List<dynamic>?;
     final closing = structuredCritique!['closing'] as String?;
 
     return ListView(
       children: [
         if (intro != null)
-          MarkdownBody(
-            data: intro,
-            styleSheet: _markdownStyleSheet(context),
-          ),
+          MarkdownBody(data: intro, styleSheet: _markdownStyleSheet(context)),
         if (imageCritiques != null)
           ...imageCritiques.map((critique) {
             final critiqueText = critique['critique'] as String?;
             final aestheticScore = critique['aesthetic_score'] as String?;
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -100,38 +94,39 @@ class CritiquePanel extends StatelessWidget {
                           Text(aestheticScore),
                         ],
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ),
             );
           }),
         if (closing != null)
-          MarkdownBody(
-            data: closing,
-            styleSheet: _markdownStyleSheet(context),
-          ),
+          MarkdownBody(data: closing, styleSheet: _markdownStyleSheet(context)),
       ],
     );
   }
 
   MarkdownStyleSheet _markdownStyleSheet(BuildContext context) {
     return MarkdownStyleSheet(
-      p: TextStyle( 
-          fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
+      p: TextStyle(
+        fontSize: 16,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
       h1: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface),
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
       h2: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface),
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
       h3: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface),
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
     );
   }
 }
-
