@@ -26,7 +26,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   /// The Google Sign-In instance.
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '64774088793-td1p6p05f27mjn0elqpo0kifol3kk6hn.apps.googleusercontent.com',
+    clientId:
+        '64774088793-td1p6p05f27mjn0elqpo0kifol3kk6hn.apps.googleusercontent.com',
     scopes: ['email'],
   );
 
@@ -52,9 +53,7 @@ class LoginScreenState extends State<LoginScreen> {
 
     final response = await http.get(
       url,
-      headers: {
-        'Authorization': 'Bearer $idToken',
-      },
+      headers: {'Authorization': 'Bearer $idToken'},
     );
 
     if (response.statusCode == 200) {
@@ -62,7 +61,6 @@ class LoginScreenState extends State<LoginScreen> {
       return data['isAuthorized'] ?? false;
     } else {
       // Handle error or assume not authorized
-      print('Error checking authorization: ${response.body}');
       return false;
     }
   }
@@ -94,7 +92,10 @@ class LoginScreenState extends State<LoginScreen> {
               ''',
               width: 24,
               height: 24,
-              color: Theme.of(context).colorScheme.onSurface,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.onSurface,
+                BlendMode.srcIn,
+              ),
             ),
             const SizedBox(width: 8),
             Text(
@@ -144,8 +145,9 @@ class LoginScreenState extends State<LoginScreen> {
                       final userCredential = await _signInWithGoogle();
                       if (!mounted) return;
 
-                      final isAuthorized =
-                          await _isUserAuthorized(userCredential.user!);
+                      final isAuthorized = await _isUserAuthorized(
+                        userCredential.user!,
+                      );
 
                       if (isAuthorized) {
                         Navigator.of(context).pushReplacement(
@@ -160,16 +162,16 @@ class LoginScreenState extends State<LoginScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                                'Access Denied: This account is not authorized.'),
+                              'Access Denied: This account is not authorized.',
+                            ),
                           ),
                         );
                       }
                     } catch (e) {
                       print(e);
+                      if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Error during sign-in: $e'),
-                        ),
+                        SnackBar(content: Text('Error during sign-in: $e')),
                       );
                     }
                   },

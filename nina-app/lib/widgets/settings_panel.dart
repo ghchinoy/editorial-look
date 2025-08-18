@@ -114,7 +114,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                 Tab(text: 'Editorial'),
               ],
               labelColor: Theme.of(context).colorScheme.onSurface,
-              unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              unselectedLabelColor: Theme.of(
+                context,
+              ).colorScheme.onSurface.withAlpha(128),
               indicatorColor: Theme.of(context).colorScheme.primary,
             ),
             Expanded(
@@ -128,20 +130,26 @@ class _SettingsPanelState extends State<SettingsPanel>
                       children: [
                         DropdownButtonFormField<String>(
                           initialValue: widget.selectedModel,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                           dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'Model',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             filled: true,
@@ -162,20 +170,26 @@ class _SettingsPanelState extends State<SettingsPanel>
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
                           initialValue: widget.selectedAspectRatio,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                           dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'Aspect Ratio',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             filled: true,
@@ -186,7 +200,12 @@ class _SettingsPanelState extends State<SettingsPanel>
                               value: '1:1',
                               child: Row(
                                 children: [
-                                  Icon(Icons.crop_square, color: Theme.of(context).colorScheme.onSurface),
+                                  Icon(
+                                    Icons.crop_square,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
+                                  ),
                                   SizedBox(width: 8),
                                   Text('1:1 (1024x1024)'),
                                 ],
@@ -198,7 +217,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                                 children: [
                                   Icon(
                                     Icons.crop_portrait,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: 8),
                                   Text('3:4 (896x1280)'),
@@ -211,7 +232,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                                 children: [
                                   Icon(
                                     Icons.crop_landscape,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: 8),
                                   Text('4:3 (1280x896)'),
@@ -224,7 +247,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                                 children: [
                                   Icon(
                                     Icons.crop_portrait,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: 8),
                                   Text('9:16 (768x1408)'),
@@ -237,7 +262,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                                 children: [
                                   Icon(
                                     Icons.crop_landscape,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: 8),
                                   Text('16:9 (1408x768)'),
@@ -253,7 +280,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                           children: [
                             Text(
                               'Number of Images',
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                             ),
                             Slider(
                               value: widget.numberOfImages,
@@ -262,8 +291,12 @@ class _SettingsPanelState extends State<SettingsPanel>
                               divisions: 3,
                               label: widget.numberOfImages.round().toString(),
                               onChanged: widget.onNumberOfImagesChanged,
-                              activeColor: Theme.of(context).colorScheme.primary,
-                              inactiveColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              activeColor: Theme.of(
+                                context,
+                              ).colorScheme.primary,
+                              inactiveColor: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withAlpha(26),
                             ),
                           ],
                         ),
@@ -280,7 +313,9 @@ class _SettingsPanelState extends State<SettingsPanel>
                           children: [
                             Text(
                               'Style',
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                             ),
                             Slider(
                               value: _styleValue,
@@ -296,28 +331,38 @@ class _SettingsPanelState extends State<SettingsPanel>
                                   _styleLabels[_styleValue.round()],
                                 );
                               },
-                              activeColor: Theme.of(context).colorScheme.primary,
-                              inactiveColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                              activeColor: Theme.of(
+                                context,
+                              ).colorScheme.primary,
+                              inactiveColor: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withAlpha(26),
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
                           initialValue: _selectedCity,
-                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                           dropdownColor: Theme.of(context).colorScheme.surface,
                           decoration: InputDecoration(
                             labelText: 'City',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(26),
                               ),
                             ),
                             filled: true,

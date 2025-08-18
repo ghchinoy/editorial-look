@@ -13,7 +13,7 @@ enum ImageLayout {
   quiltedCover,
 
   /// A standard grid layout.
-  standardGrid
+  standardGrid,
 }
 
 // Private data class to hold tile dimensions
@@ -119,8 +119,12 @@ class ImageGrid extends StatelessWidget {
                 children: [
                   for (int i = 0; i < numberOfImages; i++)
                     StaggeredGridTile.count(
-                      crossAxisCellCount: _getQuiltedGridTiles(numberOfImages.toInt())[i].crossAxisCellCount,
-                      mainAxisCellCount: _getQuiltedGridTiles(numberOfImages.toInt())[i].mainAxisCellCount,
+                      crossAxisCellCount: _getQuiltedGridTiles(
+                        numberOfImages.toInt(),
+                      )[i].crossAxisCellCount,
+                      mainAxisCellCount: _getQuiltedGridTiles(
+                        numberOfImages.toInt(),
+                      )[i].mainAxisCellCount,
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -132,20 +136,22 @@ class ImageGrid extends StatelessWidget {
               ),
             )
           : generatedImages.isNotEmpty
-              ? _buildImageGrid()
-              : Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.photo_size_select_actual_outlined,
-                      color: Colors.grey[400],
-                      size: 100,
-                    ),
-                  ),
+          ? _buildImageGrid()
+          : Container(
+              decoration: BoxDecoration(
+                color: Theme.of(
+                  context,
+                ).colorScheme.surface, //Colors.grey[200],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.photo_size_select_actual_outlined,
+                  color: Colors.grey[400],
+                  size: 100,
                 ),
+              ),
+            ),
     );
   }
 
@@ -160,12 +166,12 @@ class ImageGrid extends StatelessWidget {
           children: [
             for (int i = 0; i < generatedImages.length; i++)
               StaggeredGridTile.count(
-                crossAxisCellCount:
-                    _getQuiltedGridTiles(generatedImages.length)[i]
-                        .crossAxisCellCount,
-                mainAxisCellCount:
-                    _getQuiltedGridTiles(generatedImages.length)[i]
-                        .mainAxisCellCount,
+                crossAxisCellCount: _getQuiltedGridTiles(
+                  generatedImages.length,
+                )[i].crossAxisCellCount,
+                mainAxisCellCount: _getQuiltedGridTiles(
+                  generatedImages.length,
+                )[i].mainAxisCellCount,
                 child: _buildImageTile(i),
               ),
           ],
@@ -189,7 +195,8 @@ class ImageGrid extends StatelessWidget {
   Widget _buildImageTile(int index) {
     final imageCritiques =
         structuredCritique?['image_critiques'] as List<dynamic>?;
-    final aestheticScore = (showAestheticScores &&
+    final aestheticScore =
+        (showAestheticScores &&
             imageCritiques != null &&
             index < imageCritiques.length)
         ? imageCritiques[index]['aesthetic_score'] as String?
@@ -212,7 +219,7 @@ class ImageGrid extends StatelessWidget {
               right: 8,
               child: Chip(
                 label: Text(aestheticScore),
-                backgroundColor: Colors.black.withOpacity(0.5),
+                backgroundColor: Colors.black.withAlpha(128),
                 labelStyle: const TextStyle(color: Colors.white),
               ),
             ),
