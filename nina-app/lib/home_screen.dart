@@ -550,185 +550,201 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: Stack(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: _imageLayout == ImageLayout.standardGrid,
-                          child: PageView.builder(
-                            controller: _pageController,
-                            itemCount: _generatedImages.length,
-                            onPageChanged: (index) {
-                              setState(() {
-                                _currentPage = index;
-                              });
-                            },
-                            itemBuilder: (context, index) {
-                              final imageCritiques = _structuredCritique?[
-                                  'image_critiques'] as List<dynamic>?;
-                              final aestheticScore = (_showAestheticScores &&
-                                      imageCritiques != null &&
-                                      index < imageCritiques.length)
-                                  ? imageCritiques[index]['aesthetic_score']
-                                      as String?
-                                  : null;
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              Visibility(
+                                visible: _imageLayout == ImageLayout.standardGrid,
+                                child: PageView.builder(
+                                  controller: _pageController,
+                                  itemCount: _generatedImages.length,
+                                  onPageChanged: (index) {
+                                    setState(() {
+                                      _currentPage = index;
+                                    });
+                                  },
+                                  itemBuilder: (context, index) {
+                                    final imageCritiques = _structuredCritique?[
+                                        'image_critiques'] as List<dynamic>?;
+                                    final aestheticScore = (_showAestheticScores &&
+                                            imageCritiques != null &&
+                                            index < imageCritiques.length)
+                                        ? imageCritiques[index]['aesthetic_score']
+                                            as String?
+                                        : null;
 
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Image.memory(
-                                    _generatedImages[index],
-                                    fit: BoxFit.contain,
+                                    return Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.memory(
+                                          _generatedImages[index],
+                                          fit: BoxFit.contain,
+                                        ),
+                                        if (aestheticScore != null)
+                                          Positioned(
+                                            bottom: 8,
+                                            right: 8,
+                                            child: Chip(
+                                              label: Text(aestheticScore),
+                                              backgroundColor:
+                                                  Colors.black.withOpacity(0.5),
+                                              labelStyle: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                              Visibility(
+                                visible: _imageLayout != ImageLayout.standardGrid,
+                                child: ImageGrid(
+                                  isLoading: _isLoading,
+                                  layout: _imageLayout,
+                                  generatedImages: _generatedImages,
+                                  numberOfImages: _numberOfImages,
+                                  selectedAspectRatio: _selectedAspectRatio,
+                                  structuredCritique: _structuredCritique,
+                                  showAestheticScores: _showAestheticScores,
+                                ),
+                              ),
+                              if (_isLoading &&
+                                  _imageLayout == ImageLayout.standardGrid)
+                                Center(child: CircularProgressIndicator()),
+                              if (_generatedImages.length > 1 &&
+                                  _imageLayout == ImageLayout.standardGrid)
+                                Positioned(
+                                  bottom: 16,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          if (_pageController.hasClients) {
+                                            _pageController.previousPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          }
+                                        },
+                                        icon: Icon(Icons.arrow_back_ios),
+                                      ),
+                                      ...List.generate(
+                                        _generatedImages.length,
+                                        (index) => Container(
+                                          width: 8,
+                                          height: 8,
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: _currentPage == index
+                                                ? Colors.white
+                                                : Colors.white.withOpacity(0.5),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          if (_pageController.hasClients) {
+                                            _pageController.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          }
+                                        },
+                                        icon: Icon(Icons.arrow_forward_ios),
+                                      ),
+                                    ],
                                   ),
-                                  if (aestheticScore != null)
-                                    Positioned(
-                                      bottom: 8,
-                                      right: 8,
-                                      child: Chip(
-                                        label: Text(aestheticScore),
-                                        backgroundColor:
-                                            Colors.black.withOpacity(0.5),
-                                        labelStyle: const TextStyle(
-                                            color: Colors.white),
+                                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Latest Looks',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 150,
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('lookbook')
+                                .where('uid', isEqualTo: _user!.uid)
+                                .orderBy('createdAt', descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              }
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.docs.isEmpty) {
+                                return Center(
+                                    child: Text('No saved images yet.'));
+                              }
+
+                              final documents = snapshot.data!.docs;
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: documents.length,
+                                itemBuilder: (context, index) {
+                                  final doc = documents[index];
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(right: 16.0),
+                                    child: SizedBox(
+                                      width: 150,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AspectRatio(
+                                            aspectRatio: 1,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                8.0,
+                                              ),
+                                              child: StackedImagePreview(
+                                                key: Key(doc.id),
+                                                imageUrls: List<String>.from(
+                                                  doc['imageUrls'],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                ],
+                                  );
+                                },
                               );
                             },
                           ),
                         ),
-                        Visibility(
-                          visible: _imageLayout != ImageLayout.standardGrid,
-                          child: ImageGrid(
-                            isLoading: _isLoading,
-                            layout: _imageLayout,
-                            generatedImages: _generatedImages,
-                            numberOfImages: _numberOfImages,
-                            selectedAspectRatio: _selectedAspectRatio,
-                            structuredCritique: _structuredCritique,
-                            showAestheticScores: _showAestheticScores,
-                          ),
-                        ),
-                        if (_isLoading && _imageLayout == ImageLayout.standardGrid)
-                          Center(child: CircularProgressIndicator()),
-                        if (_generatedImages.length > 1 &&
-                            _imageLayout == ImageLayout.standardGrid)
-                          Positioned(
-                            bottom: 16,
-                            left: 0,
-                            right: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    if (_pageController.hasClients) {
-                                      _pageController.previousPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.easeInOut,
-                                      );
-                                    }
-                                  },
-                                  icon: Icon(Icons.arrow_back_ios),
-                                ),
-                                ...List.generate(
-                                  _generatedImages.length,
-                                  (index) => Container(
-                                    width: 8,
-                                    height: 8,
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: _currentPage == index
-                                          ? Colors.white
-                                          : Colors.white.withOpacity(0.5),
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    if (_pageController.hasClients) {
-                                      _pageController.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.easeInOut,
-                                      );
-                                    }
-                                  },
-                                  icon: Icon(Icons.arrow_forward_ios),
-                                ),
-                              ],
-                            ),
-                          ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Latest Looks',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 150,
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('lookbook')
-                          .where('uid', isEqualTo: _user!.uid)
-                          .orderBy('createdAt', descending: true)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text('Error: ${snapshot.error}'),
-                          );
-                        }
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                          return Center(child: Text('No saved images yet.'));
-                        }
-
-                        final documents = snapshot.data!.docs;
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: documents.length,
-                          itemBuilder: (context, index) {
-                            final doc = documents[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: SizedBox(
-                                width: 150,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AspectRatio(
-                                      aspectRatio: 1,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                          8.0,
-                                        ),
-                                        child: StackedImagePreview(
-                                          key: Key(doc.id),
-                                          imageUrls: List<String>.from(
-                                            doc['imageUrls'],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
                     ),
                   ),
                 ],
