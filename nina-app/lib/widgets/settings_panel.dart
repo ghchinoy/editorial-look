@@ -387,6 +387,7 @@ class _SettingsPanelState extends State<SettingsPanel>
                                 'Marrakech',
                                 'Rio de Janeiro',
                                 'Rome',
+                                'San Francisco',
                               ].map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
