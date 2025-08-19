@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+const double _kMaxRotationInRadians = 0.2;
+const double _kMaxRandomOffsetInPixels = 5.0;
+
 /// A widget that displays a stack of images with a playful animation.
 class StackedImagePreview extends StatefulWidget {
   /// The list of image URLs to display.
@@ -33,18 +36,18 @@ class StackedImagePreviewState extends State<StackedImagePreview>
     // Seed the random number generator with the hash code of the image URLs
     // to ensure that the "random" rotation and offset are consistent for
     // the same stack of images.
-    final seed = widget.imageUrls.toString().hashCode;
+    final seed = Object.hashAll(widget.imageUrls);
     final random = Random(seed);
 
     _randomRotations = List.generate(widget.imageUrls.length, (index) {
       // Generate a random rotation between -0.1 and 0.1 radians
       // (approximately -5.7 to 5.7 degrees).
-      return (random.nextDouble() - 0.5) * 0.2;
+      return (random.nextDouble() - 0.5) * _kMaxRotationInRadians;
     });
 
     _randomOffsets = List.generate(widget.imageUrls.length, (index) {
       // Generate a random offset between 0 and 5 pixels.
-      return random.nextDouble() * 5.0;
+      return random.nextDouble() * _kMaxRandomOffsetInPixels;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
