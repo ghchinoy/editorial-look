@@ -14,9 +14,7 @@ final ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: primaryColor,
     brightness: Brightness.light,
-    background: lightBackgroundColor,
     surface: lightSurfaceColor,
-    onBackground: lightTextColor,
     onSurface: lightTextColor,
   ),
   scaffoldBackgroundColor: lightBackgroundColor,
@@ -38,9 +36,7 @@ final ThemeData darkTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: primaryColor,
     brightness: Brightness.dark,
-    background: darkBackgroundColor,
     surface: darkSurfaceColor,
-    onBackground: darkTextColor,
     onSurface: darkTextColor,
   ),
   scaffoldBackgroundColor: darkBackgroundColor,

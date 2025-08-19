@@ -141,6 +141,8 @@ class LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
+                    final scaffoldMessenger = ScaffoldMessenger.of(context);
+                    final navigator = Navigator.of(context);
                     try {
                       final userCredential = await _signInWithGoogle();
                       if (!mounted) return;
@@ -149,8 +151,10 @@ class LoginScreenState extends State<LoginScreen> {
                         userCredential.user!,
                       );
 
+                      if (!mounted) return;
                       if (isAuthorized) {
-                        Navigator.of(context).pushReplacement(
+                        // ignore: use_build_context_synchronously
+                        navigator.pushReplacement(
                           MaterialPageRoute(
                             builder: (context) =>
                                 HomeScreen(toggleTheme: widget.toggleTheme),
@@ -159,7 +163,9 @@ class LoginScreenState extends State<LoginScreen> {
                       } else {
                         await _googleSignIn.signOut();
                         await _auth.signOut();
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        if (!mounted) return;
+                        // ignore: use_build_context_synchronously
+                        scaffoldMessenger.showSnackBar(
                           const SnackBar(
                             content: Text(
                               'Access Denied: This account is not authorized.',
@@ -168,9 +174,9 @@ class LoginScreenState extends State<LoginScreen> {
                         );
                       }
                     } catch (e) {
-                      print(e);
                       if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      // ignore: use_build_context_synchronously
+                      scaffoldMessenger.showSnackBar(
                         SnackBar(content: Text('Error during sign-in: $e')),
                       );
                     }
