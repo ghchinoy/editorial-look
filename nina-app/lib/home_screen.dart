@@ -423,23 +423,6 @@ class HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _imageLayout =
-                    ImageLayout.values[(_imageLayout.index + 1) %
-                        ImageLayout.values.length];
-              });
-            },
-            icon: Icon(
-              _imageLayout == ImageLayout.quiltedContain
-                  ? Icons.view_quilt_outlined
-                  : _imageLayout == ImageLayout.quiltedCover
-                  ? Icons.view_quilt
-                  : Icons.grid_view,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
           if (_user?.photoURL != null)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
@@ -634,6 +617,35 @@ class HomeScreenState extends State<HomeScreen> {
                                   selectedAspectRatio: _selectedAspectRatio,
                                   structuredCritique: _structuredCritique,
                                   showAestheticScores: _showAestheticScores,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _imageLayout = ImageLayout.values[
+                                            (_imageLayout.index + 1) %
+                                                ImageLayout.values.length];
+                                      });
+                                    },
+                                    icon: Icon(
+                                      _imageLayout ==
+                                              ImageLayout.quiltedContain
+                                          ? Icons.view_quilt_outlined
+                                          : _imageLayout ==
+                                                  ImageLayout.quiltedCover
+                                              ? Icons.view_quilt
+                                              : Icons.grid_view,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                               if (_isLoading &&
