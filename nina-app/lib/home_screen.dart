@@ -162,6 +162,8 @@ class HomeScreenState extends State<HomeScreen> {
     });
 
     try {
+      final stopwatch = Stopwatch()..start();
+
       // 1. Generate images
       debugPrint('Starting image generation...');
       final ai = FirebaseAI.vertexAI(location: 'us-central1');
@@ -173,6 +175,9 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       );
       final response = await model.generateImages(_promptController.text);
+      final imageGenDuration = stopwatch.elapsed.inMilliseconds / 1000.0;
+      stopwatch.reset();
+
       final imageBytesList = response.images
           .map((e) => e.bytesBase64Encoded)
           .toList();
@@ -182,16 +187,76 @@ class HomeScreenState extends State<HomeScreen> {
         return;
       }
 
-      // 2. Generate critique
-      debugPrint('Starting critique generation...');
-      final critiqueModel = FirebaseAI.vertexAI().generativeModel(
-        model: 'gemini-2.5-flash',
-        generationConfig: GenerationConfig(
-          responseMimeType: 'application/json',
-        ),
-      );
-      final critiquePrompt =
-          '''
+      // 2. In parallel: generate critique and upload images
+      debugPrint('Starting critique generation and image uploads in parallel...');
+      stopwatch.start();
+      final critiqueFuture = _generateCritique(imageBytesList);
+      final uploadFuture = _uploadImages(imageBytesList);
+
+      final results = await Future.wait([critiqueFuture, uploadFuture]);
+      final parallelDuration = stopwatch.elapsed.inMilliseconds / 1000.0;
+      stopwatch.stop();
+
+      final structuredCritique = results[0] as Map<String, dynamic>?;
+      final imageUrls = results[1] as List<String>;
+
+      // 3. Optimistically update the UI
+      if (!mounted) return;
+      setState(() {
+        _generatedImages = imageBytesList;
+        _structuredCritique = structuredCritique;
+        _isLoading = false;
+      });
+
+      // 4. Save to Firestore in the background
+      FirebaseFirestore.instance.collection('lookbook').add({
+        'imageUrls': imageUrls,
+        'prompt': _promptController.text,
+        'uid': _user!.uid,
+        'userName': _user!.displayName,
+        'userEmail': _user!.email,
+        'createdAt': Timestamp.now(),
+        'style': _selectedStyle,
+        'city': _selectedCity,
+        'model': _selectedModel,
+        'aspectRatio': _selectedAspectRatio,
+        'imageGenerationDurationSeconds': imageGenDuration,
+        'critiqueAndUploadDurationSeconds': parallelDuration,
+        'presetCategory': '', // Kept for future use
+        'geminiCategory': '', // Kept for future use
+        'geminiRating': '', // Kept for future use
+        'editorialCritique': structuredCritique,
+      }).catchError((error) {
+        debugPrint("Failed to save to Firestore: $error");
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to save look to your gallery.'),
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      debugPrint('An error occurred: $e');
+      if (!mounted) return;
+      _showErrorDialog('An Error Occurred', _getFriendlyErrorMessage(e));
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<Map<String, dynamic>?> _generateCritique(
+      List<Uint8List> imageBytesList) async {
+    final critiqueModel = FirebaseAI.vertexAI().generativeModel(
+      model: 'gemini-2.5-flash',
+      generationConfig: GenerationConfig(
+        responseMimeType: 'application/json',
+      ),
+    );
+    final critiquePrompt =
+        '''
         You're a friendly visual magazine editor who loves AI generated images with Imagen 4, Google's latest image generation model whose quality exceeds all leading external competitors in aesthetics, defect-free, and text image alignment. You are always friendly and positive and not shy to provide critiques with delightfully cheeky, clever streak. You've been presented with these images for your thoughts.
 
         The prompt used by the author to create these images was: "${_promptController.text}"
@@ -208,65 +273,28 @@ class HomeScreenState extends State<HomeScreen> {
           "closing": "..."
         }
       ''';
-      final imageParts = imageBytesList.map((imageBytes) {
-        return InlineDataPart('image/png', imageBytes);
-      }).toList();
-      final critiqueResponse = await critiqueModel.generateContent([
-        Content.multi([TextPart(critiquePrompt), ...imageParts]),
-      ]);
+    final imageParts = imageBytesList.map((imageBytes) {
+      return InlineDataPart('image/png', imageBytes);
+    }).toList();
+    final critiqueResponse = await critiqueModel.generateContent([
+      Content.multi([TextPart(critiquePrompt), ...imageParts]),
+    ]);
 
-      Map<String, dynamic>? structuredCritique;
-      if (critiqueResponse.text != null) {
-        try {
-          structuredCritique =
-              jsonDecode(critiqueResponse.text!) as Map<String, dynamic>;
-        } catch (e) {
-          debugPrint('Error parsing JSON response from Gemini:');
-          debugPrint(critiqueResponse.text);
-        }
+    if (critiqueResponse.text != null) {
+      try {
+        return jsonDecode(critiqueResponse.text!) as Map<String, dynamic>;
+      } catch (e) {
+        debugPrint('Error parsing JSON response from Gemini:');
+        debugPrint(critiqueResponse.text);
+        return null;
       }
-
-      // 3. Upload images and save to Firestore
-      debugPrint('Uploading images...');
-      final imageUrls = <String>[];
-      for (final imageBytes in imageBytesList) {
-        final imageUrl = await _uploadImage(imageBytes);
-        imageUrls.add(imageUrl);
-      }
-
-      await FirebaseFirestore.instance.collection('lookbook').add({
-        'imageUrls': imageUrls,
-        'prompt': _promptController.text,
-        'uid': _user!.uid,
-        'userName': _user!.displayName,
-        'userEmail': _user!.email,
-        'createdAt': Timestamp.now(),
-        'style': _selectedStyle,
-        'city': _selectedCity,
-        'model': _selectedModel,
-        'aspectRatio': _selectedAspectRatio,
-        'presetCategory': '', // Kept for future use
-        'geminiCategory': '', // Kept for future use
-        'geminiRating': '', // Kept for future use
-        'editorialCritique': structuredCritique,
-      });
-
-      // 4. Update state once with all new data
-      if (!mounted) return;
-      setState(() {
-        _generatedImages = imageBytesList;
-        _structuredCritique = structuredCritique;
-        _isLoading = false;
-      });
-    } catch (e) {
-      debugPrint('An error occurred: $e');
-      if (!mounted) return;
-      _showErrorDialog('An Error Occurred', _getFriendlyErrorMessage(e));
-      if (!mounted) return;
-      setState(() {
-        _isLoading = false;
-      });
     }
+    return null;
+  }
+
+  Future<List<String>> _uploadImages(List<Uint8List> imageBytesList) async {
+    final uploadTasks = imageBytesList.map((bytes) => _uploadImage(bytes)).toList();
+    return await Future.wait(uploadTasks);
   }
 
   /// Generates creative prompts using the Gemini model.
