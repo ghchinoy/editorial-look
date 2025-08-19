@@ -279,7 +279,7 @@ class _SettingsPanelState extends State<SettingsPanel>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Number of Images',
+                              'Number of Images: ${widget.numberOfImages.round()}',
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
@@ -312,7 +312,7 @@ class _SettingsPanelState extends State<SettingsPanel>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Style',
+                              'Style: ${_styleLabels[_styleValue.round()]}',
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
