@@ -240,7 +240,7 @@ class HomeScreenState extends State<HomeScreen> {
         'uid': _user!.uid,
         'userName': _user!.displayName,
         'userEmail': _user!.email,
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt': Timestamp.now(),
         'style': _selectedStyle,
         'city': _selectedCity,
         'model': _selectedModel,
