@@ -241,6 +241,8 @@ class HomeScreenState extends State<HomeScreen> {
         'createdAt': FieldValue.serverTimestamp(),
         'style': _selectedStyle,
         'city': _selectedCity,
+        'model': _selectedModel,
+        'aspectRatio': _selectedAspectRatio,
         'presetCategory': '', // Kept for future use
         'geminiCategory': '', // Kept for future use
         'geminiRating': '', // Kept for future use
