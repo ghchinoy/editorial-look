@@ -161,7 +161,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     try {
       // 1. Generate images
-      print('Starting image generation...');
+      debugPrint('Starting image generation...');
       final ai = FirebaseAI.vertexAI(location: 'us-central1');
       final model = ai.imagenModel(
         model: _selectedModel,
@@ -181,7 +181,7 @@ class HomeScreenState extends State<HomeScreen> {
       }
 
       // 2. Generate critique
-      print('Starting critique generation...');
+      debugPrint('Starting critique generation...');
       final critiqueModel = FirebaseAI.vertexAI().generativeModel(
         model: 'gemini-2.5-flash',
         generationConfig: GenerationConfig(
@@ -219,13 +219,13 @@ class HomeScreenState extends State<HomeScreen> {
           structuredCritique =
               jsonDecode(critiqueResponse.text!) as Map<String, dynamic>;
         } catch (e) {
-          print('Error parsing JSON response from Gemini:');
-          print(critiqueResponse.text);
+          debugPrint('Error parsing JSON response from Gemini:');
+          debugPrint(critiqueResponse.text);
         }
       }
 
       // 3. Upload images and save to Firestore
-      print('Uploading images...');
+      debugPrint('Uploading images...');
       final imageUrls = <String>[];
       for (final imageBytes in imageBytesList) {
         final imageUrl = await _uploadImage(imageBytes);
@@ -255,9 +255,10 @@ class HomeScreenState extends State<HomeScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('An error occurred: $e');
+      debugPrint('An error occurred: $e');
       if (!mounted) return;
       _showErrorDialog('An Error Occurred', _getFriendlyErrorMessage(e));
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
       });
@@ -316,8 +317,9 @@ class HomeScreenState extends State<HomeScreen> {
                 .toList();
           });
         } catch (e) {
-          print('Error parsing JSON response from Gemini:');
-          print(response.text);
+          debugPrint('Error parsing JSON response from Gemini:');
+          debugPrint(response.text);
+          if (!mounted) return;
           _showErrorDialog(
             'Error Parsing Response',
             'The model returned an unexpected response. Please try again.\n\nError: $e',
@@ -440,16 +442,18 @@ class HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: PopupMenuButton<String>(
-                onSelected: (value) async {
+                onSelected: (value) {
                   if (value == 'logout') {
-                    await FirebaseAuth.instance.signOut();
-                    if (!mounted) return;
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            LoginScreen(toggleTheme: widget.toggleTheme),
-                      ),
-                    );
+                    FirebaseAuth.instance.signOut().then((_) {
+                      if (!mounted) return;
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LoginScreen(toggleTheme: widget.toggleTheme),
+                        ),
+                      );
+                    });
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -461,7 +465,7 @@ class HomeScreenState extends State<HomeScreen> {
                 child: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(_user!.photoURL!),
                   onBackgroundImageError: (exception, stackTrace) {
-                    print('Error loading image: $exception');
+                    debugPrint('Error loading image: $exception');
                   },
                   child: (_user?.photoURL == null || _user!.photoURL!.isEmpty)
                       ? Text(_user!.displayName![0])
