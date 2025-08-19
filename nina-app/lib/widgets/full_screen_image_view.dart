@@ -18,11 +18,11 @@ class FullScreenImageView extends StatefulWidget {
   });
 
   @override
-  _FullScreenImageViewState createState() => _FullScreenImageViewState();
+  FullScreenImageViewState createState() => FullScreenImageViewState();
 }
 
 /// The state for the [FullScreenImageView].
-class _FullScreenImageViewState extends State<FullScreenImageView> {
+class FullScreenImageViewState extends State<FullScreenImageView> {
   /// The controller for the [PageView].
   late PageController _pageController;
 
@@ -66,12 +66,9 @@ class _FullScreenImageViewState extends State<FullScreenImageView> {
                 });
               },
               scrollPhysics: const BouncingScrollPhysics(),
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.black,
-              ),
-              loadingBuilder: (context, event) => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              backgroundDecoration: const BoxDecoration(color: Colors.black),
+              loadingBuilder: (context, event) =>
+                  const Center(child: CircularProgressIndicator()),
             ),
           ),
           Container(

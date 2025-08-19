@@ -16,11 +16,11 @@ class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key, required this.toggleTheme});
 
   @override
-  _GalleryScreenState createState() => _GalleryScreenState();
+  GalleryScreenState createState() => GalleryScreenState();
 }
 
 /// The state for the [GalleryScreen].
-class _GalleryScreenState extends State<GalleryScreen> {
+class GalleryScreenState extends State<GalleryScreen> {
   /// The currently logged in user.
   final User? _user = FirebaseAuth.instance.currentUser;
 
@@ -51,7 +51,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ''',
               width: 24,
               height: 24,
-              color: Theme.of(context).colorScheme.onSurface,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.onSurface,
+                BlendMode.srcIn,
+              ),
             ),
             const SizedBox(width: 8),
             Text(
@@ -104,15 +107,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: PopupMenuButton<String>(
-                onSelected: (value) async {
+                onSelected: (value) {
                   if (value == 'logout') {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(toggleTheme: () {}),
-                      ),
-                      (route) => false,
-                    );
+                    FirebaseAuth.instance.signOut().then((_) {
+                      if (!mounted) return;
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(toggleTheme: () {}),
+                        ),
+                        (route) => false,
+                      );
+                    });
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -124,7 +130,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 child: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(_user!.photoURL!),
                   onBackgroundImageError: (exception, stackTrace) {
-                    print('Error loading image: $exception');
+                    debugPrint('Error loading image: $exception');
+                    // TODO: Handle image loading error gracefully, perhaps by showing a placeholder.
                   },
                   child: (_user.photoURL == null || _user.photoURL!.isEmpty)
                       ? Text(_user.displayName![0])
@@ -142,8 +149,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search your images',
-                hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
-                prefixIcon: Icon(Icons.search, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+                hintStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(128),
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(128),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   borderSide: BorderSide.none,
@@ -173,12 +185,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
                   final documents = snapshot.data!.docs;
                   return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 1,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
                     itemCount: documents.length,
                     itemBuilder: (context, index) {
                       final doc = documents[index];
@@ -192,7 +205,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => FullScreenImageView(
-                                      imageUrls: List<String>.from(doc['imageUrls']),
+                                      imageUrls: List<String>.from(
+                                        doc['imageUrls'],
+                                      ),
                                       initialIndex: 0,
                                     ),
                                   ),
@@ -204,7 +219,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               ),
                             ),
                           ),
-                          
                         ],
                       );
                     },
