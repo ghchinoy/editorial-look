@@ -205,9 +205,7 @@ class GalleryScreenState extends State<GalleryScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => FullScreenImageView(
-                                      imageUrls: List<String>.from(
-                                        doc['imageUrls'],
-                                      ),
+                                      document: doc,
                                       initialIndex: 0,
                                     ),
                                   ),

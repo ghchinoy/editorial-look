@@ -1,40 +1,32 @@
-# Plan: UX Improvements for Image Display
+# Plan: Gallery and Settings UI/UX Enhancements
 
-This document captures potential UX improvements for how generated images are displayed and interacted with on the home screen.
+This plan outlines the implementation of two key features to improve the user experience of the Nina application.
 
-### Part 1: Implement Independent Scrolling `ImageGrid` (High Priority) - IN PROGRESS
+### Part 1: Enhance Settings Panel
 
-*   **The Goal:** Restructure the `home_screen.dart` layout so that the `ImageGrid` can scroll vertically, independent of the prompt input and settings panels above it.
+*   **Phase 1.1: Update Slider Labels**
+    *   [x] **Task 1.1.1:** In `nina-app/lib/widgets/settings_panel.dart`, modify the `Text` widget for the "Number of Images" slider to display the current value (e.g., "Number of Images: 3").
+    *   [x] **Task 1.1.2:** In the same file, modify the `Text` widget for the "Style" slider to display the current style name (e.g., "Style: Fashion").
+*   **Phase 1.2: Verification**
+    *   [x] **Task 1.2.1:** Run `flutter build web` to ensure the application compiles without errors.
+    *   [x] **Task 1.2.2:** Request user to run the app and confirm that the slider labels in the Settings Panel update correctly.
 
-*   **Task 1.1: Refactor the Layout with `Expanded`.**
-    *   [x] In `home_screen.dart`, the main `Column` for the left panel needs to be restructured.
-    *   [x] The `Row` containing the `TextField` and "Generate" button will remain as is.
-    *   [x] The `Wrap` containing the chips will also remain as is.
-    *   [x] The `Expanded` widget that currently contains the `Stack` with the `ImageGrid` and `PageView` will be the target of our changes. We will wrap its child in a `Column`.
+### Part 2: Enhance Full-Screen Image View
 
-*   **Task 1.2: Create a Scrollable `ImageGrid`.**
-    *   [ ] Inside the new `Column` from the previous step, the `ImageGrid` will be wrapped in an `Expanded` widget. This tells the `ImageGrid` to take up all *available* remaining vertical space, which is the key to making it scrollable.
-    *   [ ] The `ImageGrid` itself, being a `GridView` or `StaggeredGrid`, has scrolling built-in. By placing it inside an `Expanded` widget within a `Column`, it will automatically know its boundaries and enable vertical scrolling when its content exceeds that boundary.
-
-*   **Task 1.3: Fix Layout Constraints**
-    *   [x] The previous implementation incorrectly used a `SingleChildScrollView` which caused layout issues. This has been removed.
-    *   [x] The `ImageGrid`'s container is now correctly wrapped in an `Expanded` widget to ensure it fills the available space and scrolls independently.
-
-*   **Issues & Lessons Learned:**
-    *   The initial attempts to implement the scrolling behavior resulted in several layout errors, including `RenderBox was not laid out` and duplicated widgets. This was caused by incorrect assumptions about the widget tree and a series of brittle `replace` commands.
-    *   The key lesson learned is that for complex layout changes, it is better to carefully construct the correct widget tree and replace the entire relevant section of code, rather than trying to make a series of small, incremental changes. This avoids leaving the application in a broken state.
-    *   The final, stable state of the application has the correct layout, but the scrolling functionality is not yet implemented. This will be the next task to tackle.
-
-### Part 2: Add "View in Gallery" Button (Medium Priority)
-
-*   **The Goal:** Provide a clear call-to-action that takes the user from the generated image set to the full gallery view, pre-filtered or focused on the images they just created.
-
-*   **Task 2.1: Add a "View in Gallery" Button.**
-    *   [ ] In `home_screen.dart`, we will add a new `TextButton` or `IconButton` that appears *after* images have been generated. A good place for this would be next to the "Latest Looks" title or directly above the `ImageGrid`.
-    *   [ ] The button will be initially hidden and will only become visible when `_generatedImages.isNotEmpty`.
-
-*   **Task 2.2: Implement Navigation to Gallery.**
-    *   [ ] The `onPressed` action for this new button will use `Navigator.push`.
-    *   [ ] It will navigate to the `GalleryScreen`.
-    *   **Crucially,** we will need to modify the `GalleryScreen` to accept an optional parameter: the `id` of the Firestore document for the newly created set of images.
-    *   [ ] When the `GalleryScreen` receives this `id`, it can highlight or automatically scroll to that specific set of images, creating that seamless experience you described.
+*   **Phase 2.1: Add `url_launcher` dependency**
+    *   [x] **Task 2.1.1:** Add `url_launcher` to `nina-app/pubspec.yaml`.
+    *   [x] **Task 2.1.2:** Run `flutter pub get` in `nina-app` directory.
+*   **Phase 2.2: Create Metadata Panel**
+    *   [x] **Task 2.2.1:** Create a new file: `nina-app/lib/widgets/metadata_panel.dart`.
+    *   [x] **Task 2.2.2:** Implement the `MetadataPanel` widget. It will accept a Firestore document snapshot and the currently displayed image's URL.
+    *   [x] **Task 2.2.3:** The panel will display the `prompt`, `style`, `city`, and `editorialCritique`.
+    *   [x] **Task 2.2.4:** Add a "Download Image" button to the panel. The button will use `url_launcher` to open the image URL of the currently displayed image.
+*   **Phase 2.3: Update `FullScreenImageView`**
+    *   [x] **Task 2.3.1:** In `nina-app/lib/widgets/full_screen_image_view.dart`, modify the widget to accept the full Firestore document snapshot instead of just a list of URLs.
+    *   [x] **Task 2.3.2:** Change the layout to a `Row` to accommodate the `PhotoViewGallery` on the left and the new `MetadataPanel` on the right.
+    *   [x] **Task 2.3.3:** Pass the relevant data to the `MetadataPanel`, including the URL of the currently visible image.
+*   **Phase 2.4: Update `GalleryScreen`**
+    *   [x] **Task 2.4.1:** In `nina-app/lib/gallery_screen.dart`, update the `onTap` gesture detector to pass the full document snapshot to the `FullScreenImageView`.
+*   **Phase 2.5: Verification**
+    *   [x] **Task 2.5.1:** Run `flutter build web` to ensure the application compiles without errors.
+    *   [x] **Task 2.5.2:** Request user to run the app, navigate to the gallery, open an image in full-screen, and confirm that the metadata panel and download button are working as expected.
