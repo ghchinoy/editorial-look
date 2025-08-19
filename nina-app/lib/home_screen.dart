@@ -16,6 +16,8 @@ import 'package:nina/widgets/settings_panel.dart';
 import 'package:nina/widgets/critique_panel.dart';
 import 'package:nina/widgets/stacked_image_preview.dart';
 
+const double _kFloatingButtonBorderRadius = 20.0;
+
 /// The main screen of the application, responsible for displaying the
 /// image generation UI and the user's gallery.
 class HomeScreen extends StatefulWidget {
@@ -238,7 +240,7 @@ class HomeScreenState extends State<HomeScreen> {
         'uid': _user!.uid,
         'userName': _user!.displayName,
         'userEmail': _user!.email,
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt': Timestamp.now(),
         'style': _selectedStyle,
         'city': _selectedCity,
         'model': _selectedModel,
@@ -420,23 +422,6 @@ class HomeScreenState extends State<HomeScreen> {
               Theme.of(context).brightness == Brightness.dark
                   ? Icons.light_mode
                   : Icons.dark_mode,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _imageLayout =
-                    ImageLayout.values[(_imageLayout.index + 1) %
-                        ImageLayout.values.length];
-              });
-            },
-            icon: Icon(
-              _imageLayout == ImageLayout.quiltedContain
-                  ? Icons.view_quilt_outlined
-                  : _imageLayout == ImageLayout.quiltedCover
-                  ? Icons.view_quilt
-                  : Icons.grid_view,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
@@ -634,6 +619,39 @@ class HomeScreenState extends State<HomeScreen> {
                                   selectedAspectRatio: _selectedAspectRatio,
                                   structuredCritique: _structuredCritique,
                                   showAestheticScores: _showAestheticScores,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .scrim
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(
+                                        _kFloatingButtonBorderRadius),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _imageLayout = ImageLayout.values[
+                                            (_imageLayout.index + 1) %
+                                                ImageLayout.values.length];
+                                      });
+                                    },
+                                    icon: Icon(
+                                      _imageLayout ==
+                                              ImageLayout.quiltedContain
+                                          ? Icons.view_quilt_outlined
+                                          : _imageLayout ==
+                                                  ImageLayout.quiltedCover
+                                              ? Icons.view_quilt
+                                              : Icons.grid_view,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                               if (_isLoading &&
