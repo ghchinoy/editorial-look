@@ -16,6 +16,8 @@ import 'package:nina/widgets/settings_panel.dart';
 import 'package:nina/widgets/critique_panel.dart';
 import 'package:nina/widgets/stacked_image_preview.dart';
 
+const double _kFloatingButtonBorderRadius = 20.0;
+
 /// The main screen of the application, responsible for displaying the
 /// image generation UI and the user's gallery.
 class HomeScreen extends StatefulWidget {
@@ -624,8 +626,12 @@ class HomeScreenState extends State<HomeScreen> {
                                 right: 8,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(20),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .scrim
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(
+                                        _kFloatingButtonBorderRadius),
                                   ),
                                   child: IconButton(
                                     onPressed: () {
