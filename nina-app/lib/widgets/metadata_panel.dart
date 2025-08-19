@@ -23,6 +23,8 @@ class MetadataPanel extends StatelessWidget {
     final model = data['model'] as String?;
     final aspectRatio = data['aspectRatio'] as String?;
     final createdAt = data['createdAt'] as Timestamp?;
+    final imageGenerationDuration = data['imageGenerationDurationSeconds'] as num?;
+    final critiqueAndUploadDuration = data['critiqueAndUploadDurationSeconds'] as num?;
     final critiqueData = data['editorialCritique'];
 
     Map<String, dynamic>? critique;
@@ -75,6 +77,16 @@ class MetadataPanel extends StatelessWidget {
           if (createdAt != null) ...[
             Text('Created At', style: Theme.of(context).textTheme.titleMedium),
             Text(DateFormat.yMMMd().add_jm().format(createdAt.toDate())),
+            const SizedBox(height: 16),
+          ],
+          if (imageGenerationDuration != null) ...[
+            Text('Image Generation Time', style: Theme.of(context).textTheme.titleMedium),
+            Text('${imageGenerationDuration.toStringAsFixed(2)} seconds'),
+            const SizedBox(height: 16),
+          ],
+          if (critiqueAndUploadDuration != null) ...[
+            Text('Critique & Upload Time', style: Theme.of(context).textTheme.titleMedium),
+            Text('${critiqueAndUploadDuration.toStringAsFixed(2)} seconds'),
             const SizedBox(height: 16),
           ],
           if (critique != null) ...[
