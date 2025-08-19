@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 /// A widget that displays a stack of images with a playful animation.
@@ -10,11 +9,11 @@ class StackedImagePreview extends StatefulWidget {
   const StackedImagePreview({super.key, required this.imageUrls});
 
   @override
-  _StackedImagePreviewState createState() => _StackedImagePreviewState();
+  StackedImagePreviewState createState() => StackedImagePreviewState();
 }
 
 /// The state for the [StackedImagePreview].
-class _StackedImagePreviewState extends State<StackedImagePreview>
+class StackedImagePreviewState extends State<StackedImagePreview>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   /// The controller for the animation.
   late AnimationController _controller;
@@ -55,9 +54,11 @@ class _StackedImagePreviewState extends State<StackedImagePreview>
               final angle = (index == 1)
                   ? -0.1 * _controller.value
                   : (index == 2)
-                      ? 0.1 * _controller.value
-                      : 0.0;
-              final offset = (index > 0) ? 10.0 * index * _controller.value : 0.0;
+                  ? 0.1 * _controller.value
+                  : 0.0;
+              final offset = (index > 0)
+                  ? 10.0 * index * _controller.value
+                  : 0.0;
 
               return Positioned(
                 left: offset,
@@ -66,10 +67,7 @@ class _StackedImagePreviewState extends State<StackedImagePreview>
                   angle: angle,
                   child: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2,
-                      ),
+                      border: Border.all(color: Colors.white, width: 2),
                     ),
                     child: Image.network(
                       imageUrl,

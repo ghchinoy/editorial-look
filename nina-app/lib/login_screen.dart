@@ -26,7 +26,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   /// The Google Sign-In instance.
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '64774088793-td1p6p05f27mjn0elqpo0kifol3kk6hn.apps.googleusercontent.com',
+    clientId:
+        '64774088793-td1p6p05f27mjn0elqpo0kifol3kk6hn.apps.googleusercontent.com',
     scopes: ['email'],
   );
 
@@ -52,9 +53,7 @@ class LoginScreenState extends State<LoginScreen> {
 
     final response = await http.get(
       url,
-      headers: {
-        'Authorization': 'Bearer $idToken',
-      },
+      headers: {'Authorization': 'Bearer $idToken'},
     );
 
     if (response.statusCode == 200) {
@@ -62,7 +61,6 @@ class LoginScreenState extends State<LoginScreen> {
       return data['isAuthorized'] ?? false;
     } else {
       // Handle error or assume not authorized
-      print('Error checking authorization: ${response.body}');
       return false;
     }
   }
@@ -94,7 +92,10 @@ class LoginScreenState extends State<LoginScreen> {
               ''',
               width: 24,
               height: 24,
-              color: Theme.of(context).colorScheme.onSurface,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.onSurface,
+                BlendMode.srcIn,
+              ),
             ),
             const SizedBox(width: 8),
             Text(
@@ -140,15 +141,20 @@ class LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
+                    final scaffoldMessenger = ScaffoldMessenger.of(context);
+                    final navigator = Navigator.of(context);
                     try {
                       final userCredential = await _signInWithGoogle();
                       if (!mounted) return;
 
-                      final isAuthorized =
-                          await _isUserAuthorized(userCredential.user!);
+                      final isAuthorized = await _isUserAuthorized(
+                        userCredential.user!,
+                      );
 
+                      if (!mounted) return;
                       if (isAuthorized) {
-                        Navigator.of(context).pushReplacement(
+                        // ignore: use_build_context_synchronously
+                        navigator.pushReplacement(
                           MaterialPageRoute(
                             builder: (context) =>
                                 HomeScreen(toggleTheme: widget.toggleTheme),
@@ -157,19 +163,21 @@ class LoginScreenState extends State<LoginScreen> {
                       } else {
                         await _googleSignIn.signOut();
                         await _auth.signOut();
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        if (!mounted) return;
+                        // ignore: use_build_context_synchronously
+                        scaffoldMessenger.showSnackBar(
                           const SnackBar(
                             content: Text(
-                                'Access Denied: This account is not authorized.'),
+                              'Access Denied: This account is not authorized.',
+                            ),
                           ),
                         );
                       }
                     } catch (e) {
-                      print(e);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Error during sign-in: $e'),
-                        ),
+                      if (!mounted) return;
+                      // ignore: use_build_context_synchronously
+                      scaffoldMessenger.showSnackBar(
+                        SnackBar(content: Text('Error during sign-in: $e')),
                       );
                     }
                   },

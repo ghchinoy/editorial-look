@@ -21,11 +21,7 @@ This document provides instructions for setting up and running the "nina" applic
 
 ## Running and building
 
-You can collaborate with the user by having them run the application in development mode where they can hot reload "R" and also provide the logs to you, by @nina-app/app_logs.txt if and when errors occur.
-
-```bash
-cd nina-app && flutter run -d chrome --web-port=8000 > app_logs.txt 2>&1
-```
+You can collaborate with the user by having them run the application in development mode where they can hot reload "R" 
 
 You can also ask the user to provide Chrome developer console snippets.
 
