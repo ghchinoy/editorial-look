@@ -2,8 +2,6 @@
 
 This document provides instructions for setting up and running the "nina" application, as well as some lessons learned during its development.
 
-
-
 ## Lessons Learned
 
 *   **Tooling Precision:** The `replace` tool requires surgical precision. Attempting to replace large, complex blocks of code is brittle and prone to failure. It is far more robust to perform a series of smaller, more targeted replacements. Always verify the `old_string` is an exact, unique match before executing.
@@ -17,14 +15,11 @@ This document provides instructions for setting up and running the "nina" applic
 *   **Code Organization:** As UI complexity grows, it's crucial to refactor large widget build methods into smaller, dedicated widget files (e.g., in a `lib/widgets/` directory). This improves maintainability and makes debugging and modification significantly easier.
 *   **StaggeredGridTile API:** When using packages like `flutter_staggered_grid_view`, ensure you understand the correct constructor usage. `StaggeredGridTile.count` requires named parameters (`crossAxisCellCount`, `mainAxisCellCount`). For dynamic layouts, it's better to have helper functions return simple data objects (like a custom class holding dimensions) rather than returning configured widget instances.
 *   **Client-Side Authorization Checks:** Attempting to check an allowlist in Firestore immediately after login from the client can fail due to permission errors. The user's authentication state (`request.auth`) may not be immediately available to Firestore's security rules in that context. The robust, secure solution is to delegate the authorization check to a trusted backend (like a Cloud Function or dedicated service) that can verify the user's token and query the allowlist with server-side privileges.
-
+*   **Firestore Web Timestamps:** When performing complex writes from a web client, `FieldValue.serverTimestamp()` can sometimes lead to errors. Switching to a client-side `Timestamp.now()` can be a reliable workaround for immediate user-facing features. However, this introduces potential clock skew issues and should be revisited if strict, multi-user ordering becomes a requirement.
+*   **Defensive Widget Building:** When a widget displays data from a remote source like Firestore, always code defensively. Check for `null` values and verify data types (`is Map`, `is String`) before attempting to use the data. This prevents the UI from crashing when it encounters older documents with different schemas.
 
 ## Running and building
 
 You can collaborate with the user by having them run the application in development mode where they can hot reload "R" 
 
 You can also ask the user to provide Chrome developer console snippets.
-
-
-
-

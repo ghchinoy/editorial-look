@@ -30,14 +30,13 @@ The Nina project follows a modern monorepo architecture with a clear separation 
     -   The client-side logic includes a robust `try...catch` block to handle potential JSON parsing errors from the model.
 
 3.  **Image Generation & Critique:**
-    -   The user submits a prompt via the main text field.
-    -   The `_generateImage` method is called, which uses the `firebase_ai` package to call the Imagen model.
-    -   The generated image bytes are first uploaded to a unique path in the Firebase Storage bucket (`editorial-look/...`).
-    -   The public download URL for each image is retrieved.
-    -   A new document is created in the `lookbook` Firestore collection, containing these image URLs and other metadata (prompt, user info, style, city).
-    -   Crucially, the `finally` block of the image generation process triggers the `_generateCritique` method.
-    -   `_generateCritique` sends the *original prompt* and the *generated image bytes* (as Base64 `InlineDataPart` objects) in a multimodal request to the Gemini model.
-    -   The returned critique text is rendered in the UI using the `flutter_markdown` package.
+    -   The user submits a prompt, which triggers the `_generateImagesAndCritique` method.
+    -   The client first calls the Imagen model to get the raw image bytes.
+    -   To maximize speed, two operations are then run in parallel:
+        1.  The image bytes are sent to the Gemini model for critique.
+        2.  The image bytes are uploaded to Firebase Storage.
+    -   Once both parallel operations complete, the UI is **optimistically updated** to show the user the result immediately.
+    -   In the background, a new document containing the public image URLs, the critique, and other metadata is saved to the `lookbook` Firestore collection.
 
 ---
 

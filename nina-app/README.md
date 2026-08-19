@@ -2,12 +2,17 @@
 
 An AI-powered image generation application.
 
-## Features
+## Key Features
 
-*   User authentication with Firebase
-*   Image generation with Imagen 4
-*   Settings panel for advanced controls
-*   Gallery of saved images from Firestore
+*   **AI-Powered Image Generation**: Utilizes Google's Imagen models to generate high-quality images from text prompts.
+*   **Prompt with an Editorial Eye**: Get inspired with unique, AI-generated prompt ideas tailored to your chosen theme, ensuring you never have to start from a blank page.
+*   **Creative Controls**: Precisely guide the image generation process by adjusting the aspect ratio, image count, and overall artistic style.
+*   **AI-Powered Critique**: Get instant feedback on your generated images from a Gemini model that acts as a virtual photo editor.
+*   **Interactive Gallery**:
+    *   Browse all your past creations in a gallery.
+    *   A dynamic, stacked preview of image sets with drop shadows and randomized tilting gives the gallery an organic feel.
+    *   A full-screen view with a detailed metadata panel showing the prompt, author, performance metrics, and AI critique for each generation.
+    *   Download your favorite images directly from the gallery.
 
 ## Getting Started
 
@@ -47,6 +52,10 @@ After cloning the repository, you must generate your own Firebase configuration 
 ### 3. Run the Application
     *   Run `flutter pub get` to install the dependencies.
     *   Run `flutter run -d chrome` to run the application in debug mode.
+
+## Development
+
+**Note on Plugins:** After adding a new Flutter package with platform-specific code (like `url_launcher`), you must fully **stop and restart** the application. A simple hot reload is not sufficient and may result in a `MissingPluginException`.
 
 ## Deploying Firebase Rules and Indexes
 
