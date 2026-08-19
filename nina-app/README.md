@@ -1,165 +1,161 @@
-# nina
+# nina-app: Flutter Web Frontend
 
-An AI-powered image generation application.
+[![Flutter](https://img.shields.io/badge/Flutter-3.22+-02569B?style=flat-square&logo=flutter)](pubspec.yaml)
+[![Firebase Hosting](https://img.shields.io/badge/Firebase_Hosting-Live-FFA000?style=flat-square&logo=firebase)](https://editorial-look.web.app)
+[![License](https://img.shields.io/badge/License-Apache_2.0-green.svg?style=flat-square)](../LICENSE)
 
-## Key Features
+`nina-app` is a responsive Flutter web application designed for editorial AI image generation and curation. It provides interactive prompt assistance, parallel Imagen image rendering, real-time Gemini art critique, and an editorial staggered gallery.
 
-*   **AI-Powered Image Generation**: Utilizes Google's Imagen models to generate high-quality images from text prompts.
-*   **Prompt with an Editorial Eye**: Get inspired with unique, AI-generated prompt ideas tailored to your chosen theme, ensuring you never have to start from a blank page.
-*   **Creative Controls**: Precisely guide the image generation process by adjusting the aspect ratio, image count, and overall artistic style.
-*   **AI-Powered Critique**: Get instant feedback on your generated images from a Gemini model that acts as a virtual photo editor.
-*   **Interactive Gallery**:
-    *   Browse all your past creations in a gallery.
-    *   A dynamic, stacked preview of image sets with drop shadows and randomized tilting gives the gallery an organic feel.
-    *   A full-screen view with a detailed metadata panel showing the prompt, author, performance metrics, and AI critique for each generation.
-    *   Download your favorite images directly from the gallery.
+🔗 **Live Deployment:** [https://editorial-look.web.app](https://editorial-look.web.app)
 
-## Getting Started
+---
 
-This project is intended to be cloned and run with your own Firebase project.
+## 📑 Table of Contents
+
+* [✨ Key Features](#-key-features)
+* [📋 Prerequisites](#-prerequisites)
+* [⚡ Getting Started](#-getting-started)
+  * [1. Initial Firebase Setup](#1-initial-firebase-setup)
+  * [2. Local Configuration](#2-local-configuration)
+  * [3. Run the Application](#3-run-the-application)
+* [🔧 Development & Troubleshooting](#-development--troubleshooting)
+* [🔒 User Authorization & Allowlist](#-user-authorization--allowlist)
+* [📦 Firebase Rules, Indexes & CORS](#-firebase-rules-indexes--cors)
+* [🚀 Deployment to Firebase Hosting](#-deployment-to-firebase-hosting)
+* [🤝 Contributing](#-contributing)
+* [📄 License](#-license)
+
+---
+
+## ✨ Key Features
+
+* **AI-Powered Image Generation**: Utilizes Google's Imagen models to generate high-quality images with customizable aspect ratios and counts.
+* **Prompt with an Editorial Eye**: Select a style (e.g. Fashion, Business) and city to generate detailed creative prompts with Gemini.
+* **AI-Powered Critique**: Instant "Editor's Notes" feedback from Gemini evaluating prompt alignment, photorealism, and aesthetics.
+* **Interactive Gallery**:
+  * Browse past creations in dynamic masonry, standard, and quilted layouts.
+  * Interactive preview stacks with drop shadows and organic tilt angles.
+  * Full-screen detail view showing prompt metadata, author, latency metrics, and critique breakdown.
+  * One-click direct image downloads.
+
+---
+
+## 📋 Prerequisites
+
+* [Flutter SDK](https://flutter.dev/docs/get-started/install) (v3.22 or higher)
+* [Dart SDK](https://dart.dev/get-dart) (v3.4 or higher)
+* [Firebase CLI](https://firebase.google.com/docs/cli) (`npm install -g firebase-tools` v13+)
+* [FlutterFire CLI](https://firebase.google.com/docs/flutter/setup) (`dart pub global activate flutterfire_cli`)
+* [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) (`gcloud`)
+
+---
+
+## ⚡ Getting Started
 
 ### 1. Initial Firebase Setup
 
-*   Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-*   In your Google Cloud project, enable the **Vertex AI API**.
-*   In your Firebase project, go to the **Authentication** section and enable the **Google** sign-in provider.
-*   Create an **OAuth 2.0 Client ID** for a web application in the Google Cloud Console and add the necessary authorized origins and redirect URIs.
+1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
+2. In your Google Cloud project, enable the **Vertex AI API**.
+3. In your Firebase project, navigate to **Authentication > Sign-in method** and enable the **Google** provider.
+4. Create an **OAuth 2.0 Client ID** for a Web Application in the Google Cloud Console and add your authorized origins (`http://localhost:8000`, `https://<your-project>.web.app`).
 
 ### 2. Local Configuration
 
-After cloning the repository, you must generate your own Firebase configuration files. These files are not committed to the repository for security reasons.
+After cloning the repository, configure your local project settings:
 
-1.  **Install CLIs:** Make sure you have the [FlutterFire CLI](https://firebase.google.com/docs/flutter/setup) and the [Firebase CLI](https://firebase.google.com/docs/cli#install_the_firebase_cli) installed and you are logged in (`firebase login`).
+1. **Log in to Firebase & FlutterFire:**
+   ```bash
+   firebase login
+   ```
 
-2.  **Configure the Flutter App:**
-    *   Navigate to the `nina-app` directory.
-    *   Run the following command and select your Firebase project when prompted:
-        ```bash
-        flutterfire configure
-        ```
-    *   This will generate a `lib/firebase_options.dart` file with your project's specific API keys.
+2. **Configure the Flutter App:**
+   ```bash
+   cd nina-app
+   flutterfire configure
+   ```
+   This generates `lib/firebase_options.dart` with your project keys.
 
-3.  **Configure Deployment Targets:**
-    *   You need to create a `.firebaserc` file to tell the CLI which hosting site to deploy to. Run the following command to create the file and set up a target named `editorial-look` (you can replace this with your desired site name).
-        ```bash
-        firebase target:apply hosting editorial-look editorial-look
-        ```
+3. **Configure Deployment Targets:**
+   ```bash
+   firebase target:apply hosting editorial-look <your-hosting-site-id>
+   ```
 
-4.  **Update Client IDs:**
-    *   In `lib/login_screen.dart`, replace the placeholder `clientId` in the `GoogleSignIn` constructor with your Web Client ID from the Google Cloud Console.
-    *   In `web/index.html`, ensure the `meta` tag for `google-signin-client_id` has your client ID.
+4. **Update OAuth Client IDs:**
+   * In [`lib/login_screen.dart`](lib/login_screen.dart), replace the placeholder `clientId` in the `GoogleSignIn` constructor with your Web Client ID.
+   * In [`web/index.html`](web/index.html), verify that the `google-signin-client_id` meta tag is populated.
 
 ### 3. Run the Application
-    *   Run `flutter pub get` to install the dependencies.
-    *   Run `flutter run -d chrome` to run the application in debug mode.
 
-## Development
+```bash
+# Install Dart dependencies
+flutter pub get
 
-**Note on Plugins:** After adding a new Flutter package with platform-specific code (like `url_launcher`), you must fully **stop and restart** the application. A simple hot reload is not sufficient and may result in a `MissingPluginException`.
+# Run on Chrome with web-renderer
+flutter run -d chrome
+```
 
-## Deploying Firebase Rules and Indexes
+---
 
-To deploy the Firestore security rules and indexes, and Storage rules, you need to have the Firebase CLI installed.
+## 🔧 Development & Troubleshooting
 
-1.  **Install the Firebase CLI:**
-    *   If you don't have the Firebase CLI installed, you can install it by following the instructions in the [official documentation](https://firebase.google.com/docs/cli#install_the_firebase_cli).
+* **Hot Reload vs Full Restart:** After adding a new Flutter package with platform-specific code (e.g. `url_launcher`), perform a full **stop and restart** (`R` or restart the debug process). Hot reload alone may throw a `MissingPluginException`.
+* **CORS Errors during Image Loading:** Ensure the Cloud Storage CORS policy is applied (see below).
 
-2.  **Login to Firebase:**
-    *   Run `firebase login` to log in to your Firebase account.
+---
 
-3.  **Select the correct Firebase project:**
-    *   Run `firebase projects:list` to see a list of your Firebase projects and which one is currently active.
-    *   If the correct project is not active, run `firebase use <your-project-id>` to switch to the correct project.
+## 🔒 User Authorization & Allowlist
 
-4.  **Check Existing Indexes:**
-    *   Go to the [Google Cloud Console](https://console.cloud.google.com/).
-    *   Make sure you have the correct project selected.
-    *   In the navigation menu, go to **Databases > Firestore**.
-    *   In the Firestore UI, click on the **Indexes** tab.
-    *   Here you will see a list of all your existing indexes.
+This application restricts access using a Firestore-based allowlist:
 
-5.  **Deploy the rules and indexes:**
-    *   Navigate to the project directory (`/Users/ghchinoy/dev/nina/nina-app`).
-    *   Run the following command to deploy both rules and indexes:
-        ```bash
-        firebase deploy --only firestore
-        ```
-    *   Alternatively, you can deploy them separately:
-        ```bash
-        firebase deploy --only firestore:rules
-        firebase deploy --only firestore:indexes
-        ```
+1. In your Firestore Database, create a collection named `lookbook_allowlist`.
+2. Add a document for each authorized user with:
+   * **Field:** `email` (`String`)
+   * **Value:** The Google email address permitted to log in.
+3. Authorization checks are securely verified server-side by [`nina-service`](../nina-service).
 
-6.  **Configure CORS for Firebase Storage:**
-    *   The Flutter web app needs permission to display images from your project's Firebase Storage bucket. You must apply a Cross-Origin Resource Sharing (CORS) policy to the bucket.
-    *   First, create a `cors.json` file with the following content:
-        ```json
-        [
-          {
-            "origin": ["http://localhost:8000", "https://*.firebaseapp.com", "https://*.web.app"],
-            "method": ["GET"],
-            "maxAgeSeconds": 3600
-          }
-        ]
-        ```
-    *   **Important:** Your project's default storage bucket is named `<your-project-id>.appspot.com`. You can verify this in your `lib/firebase_options.dart` file.
-    *   Run the following command, replacing `<your-project-id>` with your actual Firebase project ID:
-        ```bash
-        gcloud storage buckets update gs://<your-project-id>.appspot.com --cors-file=cors.json
-        ```
+---
 
-7.  **Deploy Storage Rules:**
-    *   Run the following command to deploy the storage rules:
-        ```bash
-        firebase deploy --only storage
-        ```
+## 📦 Firebase Rules, Indexes & CORS
 
-## Backend Service (`nina-service`)
+### 1. Deploy Firestore Rules and Indexes
 
-The `nina` project includes a backend Go service located in the `nina-service` directory. This service handles secure operations that should not be performed directly by the client application, such as user authorization checks.
+```bash
+firebase deploy --only firestore:rules
+firebase deploy --only firestore:indexes
+```
 
-For instructions on how to deploy this service to Google Cloud Run, please see the `README.md` file within the `nina-service` directory.
+### 2. Configure CORS for Firebase Storage
 
-## User Authorization
+To allow the web canvas to display and download images from Firebase Storage, apply `cors.json`:
 
-This application uses a Firestore-based allowlist to control user access. Only users whose email addresses are present in the `allowlist` collection will be able to log in.
+```bash
+gcloud storage buckets update gs://<your-project-id>.appspot.com --cors-file=cors.json
+```
 
-### Managing Authorized Users
+### 3. Deploy Storage Rules
 
-1.  Go to your project's **Firestore Database** in the [Firebase Console](https://console.firebase.google.com/).
-2.  Ensure you have a collection named `lookbook_allowlist`.
-3.  To add a new authorized user, create a new document in this collection. The document ID can be anything (e.g., an auto-generated ID).
-4.  Inside the document, create a single field with the following properties:
-    *   **Field Name:** `email`
-    *   **Field Type:** `String`
-    *   **Field Value:** The email address of the user you want to authorize (e.g., `user@example.com`).
+```bash
+firebase deploy --only storage
+```
 
-Only users who sign in with a Google account matching an email in this collection will be granted access.
+---
 
-## Deployment to Firebase Hosting
+## 🚀 Deployment to Firebase Hosting
 
-To deploy the application to a shareable, public URL, use Firebase Hosting.
+```bash
+# 1. Build the Flutter web application
+flutter build web --release
 
-1.  **Initialize Hosting (One-Time Setup):**
-    *   From within the `nina-app` directory, run the following command:
-        ```bash
-        firebase init hosting
-        ```
-    *   The Firebase CLI will ask a series of questions:
-        *   `What do you want to use as your public directory?` Enter **`build/web`**.
-        *   `Configure as a single-page app (rewrite all urls to /index.html)?` Enter **`y`** (Yes).
-        *   `Set up automatic builds and deploys with GitHub?` Enter **`n`** (No) for now.
-        *   `File build/web/index.html already exists. Overwrite?` Enter **`n`** (No).
+# 2. Deploy to Firebase Hosting
+firebase deploy --only hosting
+```
 
-2.  **Build the Application:**
-    *   Before you deploy, you need to create a production build of your application.
-        ```bash
-        flutter build web
-        ```
+---
 
-3.  **Deploy the Application:**
-    *   This command will upload the contents of your `build/web` directory to Firebase Hosting.
-        ```bash
-        firebase deploy --only hosting
-        ```
-    *   After the command completes, the CLI will output the public URL for your live application.
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue first to discuss substantial changes.
+
+## 📄 License
+
+This project is licensed under the Apache 2.0 License.

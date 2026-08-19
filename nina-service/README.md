@@ -1,38 +1,141 @@
-# nina-service
+# nina-service: Authorization Backend
 
-This directory contains the Go HTTP service responsible for handling authorization checks for the Nina application.
+[![Go](https://img.shields.io/badge/Go-1.25-00ADD8?style=flat-square&logo=go)](go.mod)
+[![Cloud Run](https://img.shields.io/badge/Cloud_Run-Deployed-4285F4?style=flat-square&logo=google-cloud)](https://nina-service-64774088793.us-central1.run.app)
+[![License](https://img.shields.io/badge/License-Apache_2.0-green.svg?style=flat-square)](../LICENSE)
 
-## Deployment to Google Cloud Run
+`nina-service` is a Go HTTP microservice responsible for secure, server-side user authorization checks for the Nina application. It verifies Firebase ID tokens against Firebase Auth and checks user email access against a private Cloud Firestore allowlist (`lookbook_allowlist`).
 
-Deploying this service makes it a callable endpoint that the Flutter application can use to verify user authorization.
+---
+
+## 🔒 Security Architecture
+
+```
+[Flutter Client] ──(Firebase ID Token)──> [nina-service /checkAuth]
+                                                   │
+                                        1. Verify JWT with Firebase Auth
+                                        2. Extract user email
+                                        3. Query Firestore 'lookbook_allowlist'
+                                                   │
+[Flutter Client] <─── { isAuthorized: bool } ──────┘
+```
+
+1. The client signs in via Google OAuth and retrieves a Firebase ID token.
+2. The client calls `/checkAuth` with `Authorization: Bearer <ID_TOKEN>`.
+3. `nina-service` validates the JWT token with the Firebase Admin SDK.
+4. The service queries the private `lookbook_allowlist` collection in Firestore. The allowlist is never directly exposed to the frontend.
+5. The service responds with `{ "isAuthorized": true }` or an appropriate error code.
+
+---
+
+## 📡 API Reference
+
+### `POST /checkAuth`
+
+Checks whether the authenticated user is permitted to access the application.
+
+#### Request Headers
+| Header | Value | Required |
+|---|---|---|
+| `Authorization` | `Bearer <FIREBASE_ID_TOKEN>` | **Yes** |
+| `Content-Type` | `application/json` | Optional |
+
+#### Example Request
+```bash
+curl -X POST https://nina-service-64774088793.us-central1.run.app/checkAuth \
+  -H "Authorization: Bearer $FIREBASE_ID_TOKEN"
+```
+
+#### Example Responses
+
+* **Authorized (200 OK):**
+  ```json
+  {
+    "isAuthorized": true
+  }
+  ```
+
+* **Unauthorized / Not in Allowlist (200 OK):**
+  ```json
+  {
+    "isAuthorized": false
+  }
+  ```
+
+* **Missing Authorization Header (401 Unauthorized):**
+  ```json
+  {
+    "error": "Authorization header required"
+  }
+  ```
+
+---
+
+## 💻 Local Development
 
 ### Prerequisites
+* [Go](https://go.dev/doc/install) (v1.25+)
+* [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) (`gcloud`) with Application Default Credentials (`gcloud auth application-default login`)
 
-1.  Ensure you have the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) installed and configured.
-2.  Ensure you have enabled the **Cloud Run API** and **Cloud Build API** in your `ghchinoy-genai-sa` Google Cloud project.
+### Run Locally
 
-### Deployment Steps
+```bash
+# 1. Navigate to nina-service directory
+cd nina-service
 
-1.  **Navigate to this directory:**
-    ```bash
-    cd /path/to/your/project/nina/nina-service
-    ```
+# 2. Download Go dependencies
+go mod download
 
-2.  **Build and Push the Container Image:**
-    *   This command uses Google Cloud Build to build your container image from the `Dockerfile` and push it to the Google Container Registry.
-    ```bash
-    gcloud builds submit --tag gcr.io/ghchinoy-genai-sa/nina-service
-    ```
+# 3. Start the service
+export PORT=8080
+go run .
+```
 
-3.  **Deploy the Image to Cloud Run:**
-    *   This command deploys the container image to the fully managed Cloud Run service.
-    ```bash
-    gcloud run deploy nina-service --image gcr.io/ghchinoy-genai-sa/nina-service --platform managed --region us-central1 --allow-unauthenticated
-    ```
-    *   During the deployment, you may be prompted to confirm settings. The defaults are usually acceptable.
-    *   The `--allow-unauthenticated` flag makes the service public, but it is secured by requiring a valid Firebase ID token in the `Authorization` header, which is verified by the service's code.
+The service will start listening on `http://localhost:8080`.
 
-4.  **Retrieve the Service URL:**
-    *   After a successful deployment, the command will output the service URL. It will look something like this:
-        `https://nina-service-xxxxxxxxxx-uc.a.run.app`
-    *   This is the URL that the Flutter application will need to call.
+### Run Tests & Build
+
+```bash
+# Run unit tests
+go test ./...
+
+# Build binary
+go build -o bin/nina-service .
+```
+
+---
+
+## 🚀 Deployment to Google Cloud Run
+
+### Prerequisites
+* Cloud Run API and Cloud Build API enabled in project `ghchinoy-genai-sa`.
+
+### Build & Deploy
+
+```bash
+# 1. Build and push container image using Cloud Build
+gcloud builds submit --tag gcr.io/ghchinoy-genai-sa/nina-service --project ghchinoy-genai-sa
+
+# 2. Deploy to Cloud Run (managed)
+gcloud run deploy nina-service \
+  --image gcr.io/ghchinoy-genai-sa/nina-service \
+  --project ghchinoy-genai-sa \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+The service endpoint URL will be displayed in the terminal upon deployment completion:
+```
+https://nina-service-64774088793.us-central1.run.app
+```
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+
+## 📄 License
+
+This project is licensed under the Apache 2.0 License.
