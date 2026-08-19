@@ -1,0 +1,35 @@
+# Compiled Go binaries and executables
+nina-service
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.out
+*.test
+*.bin
+
+# Build output directories
+bin/
+dist/
+out/
+
+# Go workspace & coverage
+go.work
+go.work.sum
+*.coverprofile
+*.coverage
+coverage.txt
+coverage.out
+profile.out
+
+# Environment & credentials
+.env
+*.local
+credentials.json
+service-account*.json
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/

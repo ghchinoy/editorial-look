@@ -1,3 +1,21 @@
+# Compiled binaries, libraries, and executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+*.out
+*.bin
+*.test
+nina-service/nina-service
+nina-service/out/
+nina-service/bin/
+bin/
+dist/
+out/
+
 # Flutter/Dart
 .dart_tool/
 .flutter-plugins
